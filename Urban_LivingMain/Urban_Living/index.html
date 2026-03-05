@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeta Gradnja</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    /* ═══════════════════════════════════════════
+       BACK BUTTON
+    ═══════════════════════════════════════════ */
+    .back-btn {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #2b2b2b;
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeUp 0.6s 1.9s ease forwards;
+      transition: color 0.3s;
+    }
+    .back-btn::before {
+      content: '←';
+      font-size: 0.9rem;
+      transition: transform 0.3s;
+    }
+    .back-btn:hover { color: #006b5d; }
+    .back-btn:hover::before { transform: translateX(-4px); }
+
+    /* ═══════════════════════════════════════════
+       PAGE INTRO CURTAIN
+    ═══════════════════════════════════════════ */
+    .page-curtain {
+      position: fixed;
+      inset: 0;
+      background: #1a1a1a;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: curtainLift 0.8s 1.2s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+      pointer-events: none;
+    }
+    @keyframes curtainLift {
+      to { transform: translateY(-100%); opacity: 0; }
+    }
+    .curtain-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 5vw, 3rem);
+      color: #f2ede6;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: curtainTextIn 0.7s 0.2s ease forwards;
+    }
+    @keyframes curtainTextIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO TAGLINE
+    ═══════════════════════════════════════════ */
+    .hero-tagline {
+      text-align: center;
+      padding: 48px 24px 20px;
+      margin-top: 90px;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.6s ease forwards;
+    }
+    .hero-tagline p {
+      font-family: 'Quicksand', sans-serif;
+      font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #999;
+    }
+    .hero-line {
+      width: 40px;
+      height: 1px;
+      background: #006b5d;
+      margin: 18px auto 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: lineGrow 0.7s 2.2s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes lineGrow { to { transform: scaleX(1); } }
+    @keyframes fadeIn   { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ═══════════════════════════════════════════
+       GALLERY
+    ═══════════════════════════════════════════ */
+    .gallery {
+      margin-top: 0 !important;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.9s ease forwards;
+    }
+    .gallery-item {
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .gallery-item:nth-child(1) { animation-delay: 2.0s; }
+    .gallery-item:nth-child(2) { animation-delay: 2.1s; }
+    .gallery-item:nth-child(3) { animation-delay: 2.2s; }
+    .gallery-item:nth-child(4) { animation-delay: 2.3s; }
+    .gallery-item:nth-child(5) { animation-delay: 2.4s; }
+    .gallery-item:nth-child(6) { animation-delay: 2.5s; }
+    .gallery-item:nth-child(7) { animation-delay: 2.6s; }
+    .gallery-item:nth-child(8) { animation-delay: 2.7s; }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .gallery-item:hover::after { opacity: 1; }
+
+    .gallery-item::before {
+      content: attr(data-label);
+      position: absolute;
+      bottom: 16px; left: 20px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .gallery-item:hover::before { opacity: 1; transform: translateY(0); }
+
+    .gallery-item img.day,
+    .gallery-item img.night {
+      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    }
+    .gallery-item:hover img.day   { opacity: 0;  transform: scale(1.07) !important; }
+    .gallery-item:hover img.night { opacity: 1;  transform: scale(1.07) !important; }
+
+    /* ═══════════════════════════════════════════
+       STANOVI BUTTON
+    ═══════════════════════════════════════════ */
+    #pageWrapper {
+      opacity: 0;
+      animation: fadeUp 0.9s 2.4s ease forwards;
+    }
+    .btn-apartments {
+      position: relative;
+      overflow: hidden;
+      border: 1.5px solid #006b5d;
+      display: inline-block;
+      margin: 80px auto;
+    }
+    .btn-apartments::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #f2ede6;
+      transform: translateY(101%);
+      transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+      z-index: 0;
+    }
+    .btn-apartments:hover::before { transform: translateY(0); }
+    .btn-apartments span { position: relative; z-index: 1; transition: color 0.45s ease; }
+    .btn-apartments:hover span { color: #006b5d; }
+
+    /* ═══════════════════════════════════════════
+       HAMBURGER → X
+    ═══════════════════════════════════════════ */
+    .close-btn { display: none !important; }
+
+    .hamburger {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 99999;
+      border-radius: 50%;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.3s ease;
+      isolation: isolate;
+    }
+
+    .hamburger:hover { background: transparent; }
+    .hamburger.active:hover { background: transparent; }
+
+    .hamburger span {
+      display: block;
+      height: 2px;
+      border-radius: 2px;
+      background: #2b2b2b;
+      transform-origin: center;
+      transition:
+        width     0.35s cubic-bezier(0.76, 0, 0.24, 1),
+        transform 0.45s cubic-bezier(0.76, 0, 0.24, 1),
+        opacity   0.3s ease,
+        background 0.3s ease;
+    }
+
+    .hamburger span:nth-child(1) { width: 24px; }
+    .hamburger span:nth-child(2) { width: 16px; }
+    .hamburger span:nth-child(3) { width: 24px; }
+
+    .hamburger.active span { background: #ffffff !important; }
+    .hamburger.active span:nth-child(1) { width: 22px; transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { width: 0; opacity: 0; }
+    .hamburger.active span:nth-child(3) { width: 22px; transform: translateY(-7px) rotate(-45deg); }
+
+    /* ═══════════════════════════════════════════
+       OVERLAY MENU
+    ═══════════════════════════════════════════ */
+    .menu-overlay {
+      background: #141414 !important;
+      padding-top: 90px !important;
+    }
+
+    .menu-overlay::before {
+      content: 'Zeta Gradnja';
+      position: absolute;
+      top: 28px;
+      left: 28px;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.15);
+      pointer-events: none;
+    }
+
+    .menu-overlay::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 2px;
+      height: 0;
+      background: #006b5d;
+      transition: height 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .menu-overlay.active::after { height: 100%; }
+
+    .menu-overlay .menu-link {
+      font-family: 'Quicksand', sans-serif !important;
+      font-size: 1.1rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.16em !important;
+      text-transform: uppercase !important;
+      color: rgba(255,255,255,0.6) !important;
+      padding: 18px 28px !important;
+      position: relative;
+      transition: color 0.3s ease !important;
+      opacity: 0;
+    }
+
+    .menu-overlay .menu-link::after {
+      content: '';
+      position: absolute;
+      bottom: 12px; left: 28px;
+      width: 0; height: 1px;
+      background: #006b5d;
+      transition: width 0.35s ease;
+    }
+    .menu-overlay .menu-link:hover { color: #fff !important; }
+    .menu-overlay .menu-link:hover::after { width: 28px; }
+    .menu-overlay .menu-link.active { color: #fff !important; }
+    .menu-overlay .menu-link.active::after { width: 20px; }
+
+    .menu-overlay.active .menu-link { animation: menuSlideIn 0.45s ease forwards; }
+    .menu-overlay.active .menu-link:nth-child(1) { animation-delay: 0.05s; }
+    .menu-overlay.active .menu-link:nth-child(2) { animation-delay: 0.12s; }
+    .menu-overlay.active .menu-link:nth-child(3) { animation-delay: 0.19s; }
+    .menu-overlay.active .menu-link:nth-child(4) { animation-delay: 0.26s; }
+    @keyframes menuSlideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ═══════════════════════════════════════════
+       FLOOR MODAL
+    ═══════════════════════════════════════════ */
+    .floor-list li {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .floor-list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      transform: translateY(-50%) scaleY(0);
+      width: 3px; height: 55%;
+      background: #006b5d;
+      border-radius: 2px;
+      transition: transform 0.3s ease;
+    }
+    .floor-list li:hover::before { transform: translateY(-50%) scaleY(1); }
+    .floor-list li:hover { padding-left: 18px !important; color: #006b5d !important; }
+    .floor-num {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: #bbb;
+      font-family: 'Quicksand', sans-serif;
+      transition: color 0.3s ease;
+    }
+    .floor-list li:hover .floor-num { color: #006b5d; }
+    .modal.active .floor-list li { animation: fadeUp 0.4s ease both; }
+    .modal.active .floor-list li:nth-child(1) { animation-delay: 0.05s; }
+    .modal.active .floor-list li:nth-child(2) { animation-delay: 0.10s; }
+    .modal.active .floor-list li:nth-child(3) { animation-delay: 0.15s; }
+    .modal.active .floor-list li:nth-child(4) { animation-delay: 0.20s; }
+    .modal.active .floor-list li:nth-child(5) { animation-delay: 0.25s; }
+    .modal.active .floor-list li:nth-child(6) { animation-delay: 0.30s; }
+
+    /* ═══════════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════════ */
+    .contact-info { position: relative; }
+    .contact-info::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 40px; height: 1px;
+      background: #006b5d; opacity: 0.5;
+    }
+    .contact-info p {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px; color: #666;
+    }
+    .contact-info a { color: #006b5d !important; position: relative; }
+    .contact-info a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 100%; height: 1px;
+      background: #006b5d;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s ease;
+    }
+    .contact-info a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    /* ═══════════════════════════════════════════
+       MOBILE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .hero-tagline { padding: 32px 20px 12px; }
+      .gallery-item { height: 260px; }
+      .gallery-item:active { transform: scale(0.985); transition: transform 0.15s ease; }
+      .floor-list li { padding: 22px 0 !important; font-size: 15px; }
+
+      .btn-apartments {
+        font-size: 18px !important;
+        padding: 18px 48px !important;
+        letter-spacing: 3px !important;
+        animation: btnPulse 3s 3.5s ease infinite;
+      }
+      @keyframes btnPulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(0,107,93,0); }
+        50%       { box-shadow: 0 0 0 12px rgba(0,107,93,0.1); }
+      }
+
+      .back-btn { top: 16px; left: 16px; }
+    }
+
+    /* TAP HINT */
+    .tap-hint {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      background: rgba(0,0,0,0.52);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: rgba(255,255,255,0.88);
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: 20px;
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0;
+      animation: hintAppear 0.5s 3.5s ease forwards, hintFade 0.6s 7s ease forwards;
+    }
+    @keyframes hintAppear { to { opacity: 1; } }
+    @keyframes hintFade   { to { opacity: 0; pointer-events: none; } }
+    @media (min-width: 769px) { .tap-hint { display: none; } }
+
+  </style>
+</head>
+<body id="top">
+
+  <!-- BACK BUTTON -->
+  <a href="../index.html" class="back-btn">Nazad</a>
+
+  <!-- PAGE CURTAIN -->
+  <div class="page-curtain">
+    <span class="curtain-logo">Zeta Gradnja</span>
+  </div>
+
+<!-- HEADER -->
+<header class="header">
+  <a href="index.html" class="logo">
+    <img src="images/urbanlivinglogo.png" alt="Urban Living Logo">
+  </a>
+</header>
+
+  <!-- HAMBURGER -->
+  <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Toggle navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- OVERLAY MENU -->
+  <div class="menu-overlay" id="menuOverlay">
+    <a href="#top"          class="menu-link">Početna</a>
+    <a href="#contactInfo"  class="menu-link">Kontakt</a>
+    <a href="#"             class="menu-link" id="menuStanovi">Stanovi</a>
+    <a href="https://www.instagram.com/pesicparketi" target="_blank" class="menu-link">Instagram</a>
+  </div>
+  <div id="menuDim"></div>
+
+  <!-- HERO TAGLINE -->
+  <div class="hero-tagline">
+    <p>Ekskluzivni stanovi · Urban Living</p>
+    <div class="hero-line"></div>
+  </div>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery"></section>
+
+  <!-- STANOVI BUTTON -->
+  <div id="pageWrapper">
+    <a href="#" class="btn-apartments" id="openFloors"><span>Stanovi</span></a>
+  </div>
+
+  <!-- CONTACT INFO -->
+  <section id="contactInfo" class="contact-info">
+    <p>Email: <a href="mailto:aaaaaaaa@gmail.com">aaaaaaaa@gmail.com</a></p>
+    <p>Phone: <strong>+123 123 123 123</strong></p>
+  </section>
+
+  <!-- FLOOR POPUP MODAL -->
+  <div class="modal" id="floorModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <ul class="floor-list">
+        <li data-floor="1">Prizemlje     <span class="floor-num">00</span></li>
+        <li data-floor="2">Prvi Sprat    <span class="floor-num">01</span></li>
+        <li data-floor="3">Drugi Sprat   <span class="floor-num">02</span></li>
+        <li data-floor="4">Treći Sprat   <span class="floor-num">03</span></li>
+        <li data-floor="5">Četvrti Sprat <span class="floor-num">04</span></li>
+        <li data-floor="6">Peti Sprat    <span class="floor-num">05</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Attach hover labels to gallery items
+      document.querySelectorAll('.gallery-item').forEach((item, i) => {
+        item.setAttribute('data-label', 'Pogled ' + (i + 1));
+      });
+
+      // Inject tap hint into FIRST gallery item only (mobile)
+      const firstItem = document.querySelector('.gallery-item');
+      if (firstItem) {
+        const hint = document.createElement('span');
+        hint.className = 'tap-hint';
+        hint.textContent = '↕ Tapnite za noćni prikaz';
+        firstItem.appendChild(hint);
+
+        document.querySelector('.gallery').addEventListener('click', () => {
+          hint.style.animation = 'none';
+          hint.style.opacity   = '0';
+          hint.style.transition = 'opacity 0.3s ease';
+        }, { once: true });
+      }
+
+      // Keyboard support for hamburger
+      document.getElementById('hamburger').addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          document.getElementById('hamburger').click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
