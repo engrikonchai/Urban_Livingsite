@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stanovi — Urban Living</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    :root {
+      --green: #006b5d;
+      --dark:  #1a1a1a;
+      --cream: #f2ede6;
+      --muted: #999;
+    }
+
+    /* ── HAMBURGER ── */
+    .close-btn { display: none !important; }
+
+    .hamburger {
+      position: fixed;
+      right: 20px; top: 20px;
+      width: 48px; height: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 99999;
+      border-radius: 50%;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.3s ease;
+      isolation: isolate;
+    }
+    .hamburger:hover, .hamburger.active:hover { background: transparent; }
+
+    .hamburger span {
+      display: block;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--dark);
+      transform-origin: center;
+      transition: width .35s cubic-bezier(.76,0,.24,1),
+                  transform .45s cubic-bezier(.76,0,.24,1),
+                  opacity .3s ease, background .3s ease;
+    }
+    .hamburger span:nth-child(1) { width: 24px; }
+    .hamburger span:nth-child(2) { width: 16px; }
+    .hamburger span:nth-child(3) { width: 24px; }
+    .hamburger.active span              { background: #fff !important; }
+    .hamburger.active span:nth-child(1) { width: 22px; transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { width: 0; opacity: 0; }
+    .hamburger.active span:nth-child(3) { width: 22px; transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── OVERLAY MENU ── */
+    .menu-overlay { background: #141414 !important; padding-top: 90px !important; }
+    .menu-overlay::before {
+      content: 'Urban Living';
+      position: absolute; top: 28px; left: 28px;
+      font-family: 'Playfair Display', serif;
+      font-size: .65rem; letter-spacing: .28em; text-transform: uppercase;
+      color: rgba(255,255,255,.15); pointer-events: none;
+    }
+    .menu-overlay::after {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 2px; height: 0; background: var(--green);
+      transition: height .55s cubic-bezier(.22,1,.36,1);
+    }
+    .menu-overlay.active::after { height: 100%; }
+
+    .menu-overlay .menu-link {
+      font-family: 'Quicksand', sans-serif !important;
+      font-size: 1.1rem !important; font-weight: 600 !important;
+      letter-spacing: .16em !important; text-transform: uppercase !important;
+      color: rgba(255,255,255,.6) !important;
+      padding: 18px 28px !important; position: relative;
+      transition: color .3s ease !important; opacity: 0;
+    }
+    .menu-overlay .menu-link::after {
+      content: ''; position: absolute; bottom: 12px; left: 28px;
+      width: 0; height: 1px; background: var(--green); transition: width .35s ease;
+    }
+    .menu-overlay .menu-link:hover        { color: #fff !important; }
+    .menu-overlay .menu-link:hover::after  { width: 28px; }
+    .menu-overlay .menu-link.active        { color: #fff !important; }
+    .menu-overlay .menu-link.active::after { width: 20px; }
+
+    .menu-overlay.active .menu-link { animation: menuSlideIn .45s ease forwards; }
+    .menu-overlay.active .menu-link:nth-child(1) { animation-delay: .05s; }
+    .menu-overlay.active .menu-link:nth-child(2) { animation-delay: .12s; }
+    .menu-overlay.active .menu-link:nth-child(3) { animation-delay: .19s; }
+    .menu-overlay.active .menu-link:nth-child(4) { animation-delay: .26s; }
+    @keyframes menuSlideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+        body#apartments { padding-top: 50px; }
+
+    /* ── FLOOR NAV ── */
+    .floor-nav {
+      position: sticky; top: 90px; z-index: 100;
+      background: rgba(242,237,230,.95);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      padding: 12px 6%; display: flex; gap: 8px;
+      overflow-x: auto; scrollbar-width: none;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      margin-top: 90px; /* push below fixed header */
+      animation: fadeUp .8s .15s ease both;
+    }
+    .floor-nav::-webkit-scrollbar { display: none; }
+    .floor-nav a {
+      -webkit-tap-highlight-color: transparent;
+      flex: 0 0 auto; font-family: 'Quicksand', sans-serif;
+      font-size: .7rem; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; text-decoration: none;
+      color: var(--muted); padding: 7px 16px;
+      border: 1px solid rgba(0,0,0,.12); border-radius: 100px;
+      transition: all .3s ease; white-space: nowrap;
+    }
+    .floor-nav a:hover, .floor-nav a.active {
+      background: var(--green); border-color: var(--green); color: #fff;
+    }
+
+    /* ── FLOOR SECTIONS ── */
+    .apartments-page { padding-top: 0 !important; }
+
+    .floor {
+      padding: 70px 6% 60px;
+      border-bottom: 1px solid rgba(0,0,0,.06);
+      position: relative;
+      animation: fadeUp .7s ease both;
+    }
+    .floor:nth-child(1) { animation-delay: .1s; }
+    .floor:nth-child(2) { animation-delay: .2s; }
+    .floor:nth-child(3) { animation-delay: .3s; }
+    .floor:nth-child(4) { animation-delay: .4s; }
+    .floor:nth-child(5) { animation-delay: .5s; }
+    .floor:nth-child(6) { animation-delay: .6s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── FLOOR HEADER ── */
+    .floor-header { position: relative; margin-bottom: 40px; }
+    .floor-number {
+      position: absolute; top: 50%; left: -2px;
+      transform: translateY(-60%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(5rem, 15vw, 10rem);
+      font-weight: 700; color: rgba(0,0,0,.04);
+      line-height: 1; pointer-events: none; user-select: none;
+      letter-spacing: -.04em;
+    }
+    .floor-header-content {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 24px;
+    }
+    .floor-accent-line {
+      width: 40px; height: 2px;
+      background: var(--green); flex-shrink: 0;
+    }
+    .floor-header h2 {
+      font-family: 'Playfair Display', serif !important;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem) !important;
+      font-weight: 600 !important; color: var(--dark) !important;
+      letter-spacing: .01em !important; margin-bottom: 0 !important;
+    }
+    .floor-meta {
+      margin-top: 10px; margin-left: 64px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: .72rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── IMAGE GALLERY ── */
+    .floor-gallery.mobile-scroll {
+      display: flex !important; gap: 16px !important;
+      overflow-x: auto; padding-bottom: 16px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+    }
+    .floor-gallery.mobile-scroll:active { cursor: grabbing; }
+    .floor-gallery.mobile-scroll::-webkit-scrollbar { height: 3px; }
+    .floor-gallery.mobile-scroll::-webkit-scrollbar-track {
+      background: rgba(0,0,0,.05); border-radius: 2px;
+    }
+    .floor-gallery.mobile-scroll::-webkit-scrollbar-thumb {
+      background: var(--green); border-radius: 2px;
+    }
+    .floor-gallery.mobile-scroll img {
+      flex: 0 0 auto !important;
+      width: clamp(260px, 38vw, 480px) !important;
+      height: 300px !important;
+      object-fit: cover !important;
+      border-radius: 4px !important;
+      scroll-snap-align: start;
+      cursor: pointer;
+      transition: transform .4s ease, filter .4s ease, box-shadow .4s ease !important;
+    }
+    .floor-gallery.mobile-scroll img:first-child {
+      width: clamp(300px, 45vw, 560px) !important;
+      height: 340px !important;
+    }
+    .floor-gallery.mobile-scroll img:hover {
+      transform: scale(1.02) !important;
+      filter: brightness(1.05) !important;
+      box-shadow: 0 20px 50px rgba(0,0,0,.18) !important;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(10,10,10,.97);
+      display: flex; justify-content: center; align-items: center;
+      z-index: 9000; cursor: zoom-out;
+      animation: lbIn .3s ease;
+    }
+    @keyframes lbIn { from { opacity:0; } to { opacity:1; } }
+    .lightbox img {
+      max-width: 92vw; max-height: 88vh;
+      border-radius: 4px; box-shadow: 0 40px 100px rgba(0,0,0,.6);
+      cursor: default;
+      animation: lbImgIn .35s cubic-bezier(.22,1,.36,1);
+    }
+    @keyframes lbImgIn {
+      from { opacity:0; transform: scale(.94); }
+      to   { opacity:1; transform: scale(1); }
+    }
+    .lightbox-close {
+      position: absolute; top: 24px; right: 28px;
+      color: rgba(255,255,255,.6); font-size: 2rem;
+      cursor: pointer; line-height: 1; transition: color .2s ease;
+    }
+    .lightbox-close:hover { color: #fff; }
+    .lightbox-hint {
+      position: absolute; bottom: 24px; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Quicksand', sans-serif; font-size: .65rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+    }
+
+    /* ── CONTACT ── */
+    .contact-info {
+      padding: 70px 6% !important;
+      text-align: left !important;
+    }
+    .contact-info p {
+      font-family: 'Quicksand', sans-serif !important;
+      font-size: .9rem !important; letter-spacing: .08em;
+      color: #666 !important; margin-bottom: 10px !important;
+    }
+    .contact-info a { color: var(--green) !important; position: relative; text-decoration: none; }
+    .contact-info a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 100%; height: 1px; background: var(--green);
+      transform: scaleX(0); transform-origin: right; transition: transform .4s ease;
+    }
+    .contact-info a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .floor-nav { top: 70px; padding: 10px 5%; margin-top: 70px; }
+      .floor { padding: 50px 5% 40px; }
+      .floor-number { font-size: clamp(4rem, 20vw, 6rem); }
+      .floor-meta { margin-left: 0; margin-top: 8px; }
+      .floor-gallery.mobile-scroll img { width: 78vw !important; height: 220px !important; }
+      .floor-gallery.mobile-scroll img:first-child { width: 85vw !important; height: 250px !important; }
+      .floor-gallery.mobile-scroll img:hover { transform: none !important; filter: none !important; box-shadow: none !important; }
+      .floor-gallery.mobile-scroll img:active { transform: scale(.97) !important; transition: transform .15s ease !important; }
+      .contact-info { padding: 50px 5% !important; }
+    }
+
+  </style>
+</head>
+<body id="apartments">
+
+<!-- HEADER -->
+<header class="header">
+<span class="logo">
+  <img src="images/urbanlivinglogo.png" alt="Urban Living Logo">
+</span>
+</header>
+
+  <!-- HAMBURGER outside header so it's never trapped in stacking context -->
+  <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class="menu-overlay" id="menuOverlay">
+    <a href="index.html"      class="menu-link">Početna</a>
+    <a href="#contactInfo"    class="menu-link">Kontakt</a>
+    <a href="apartments.html" class="menu-link active">Stanovi</a>
+    <a href="https://www.instagram.com/pesicparketi" target="_blank" class="menu-link">Instagram</a>
+  </div>
+  <div id="menuDim"></div>
+
+  <!-- STICKY FLOOR NAV -->
+  <nav class="floor-nav" id="floorNav">
+    <a href="#floor1">Prizemlje</a>
+    <a href="#floor2">Prvi Sprat</a>
+    <a href="#floor3">Drugi Sprat</a>
+    <a href="#floor4">Treći Sprat</a>
+    <a href="#floor5">Četvrti Sprat</a>
+    <a href="#floor6">Penthouse</a>
+  </nav>
+
+  <main class="apartments-page">
+
+    <section class="floor" id="floor1">
+      <div class="floor-header">
+        <span class="floor-number">00</span>
+        <div class="floor-header-content">
+          <div class="floor-accent-line"></div>
+          <h2>Prizemlje</h2>
+        </div>
+      </div>
+      <div class="floor-gallery mobile-scroll">
+        <img src="images/Prizemlje.jpg" alt="Prizemlje">
+      </div>
+    </section>
+
+    <section class="floor" id="floor2">
+      <div class="floor-header">
+        <span class="floor-number">01</span>
+        <div class="floor-header-content">
+          <div class="floor-accent-line"></div>
+          <h2>Prvi Sprat</h2>
+        </div>
+      </div>
+      <div class="floor-gallery mobile-scroll">
+        <img src="images/Grupno1.jpg" alt="Raspored sprata">
+        <img src="images/S1A1.jpg"    alt="Stan 1A">
+        <img src="images/S1A2.jpg"    alt="Stan 1B">
+        <img src="images/S1A3.jpg"    alt="Stan 1C">
+        <img src="images/S1A4.jpg"    alt="Stan 1D">
+      </div>
+    </section>
+
+    <section class="floor" id="floor3">
+      <div class="floor-header">
+        <span class="floor-number">02</span>
+        <div class="floor-header-content">
+          <div class="floor-accent-line"></div>
+          <h2>Drugi Sprat</h2>
+        </div>
+      </div>
+      <div class="floor-gallery mobile-scroll">
+        <img src="images/Grupno2.jpg" alt="Raspored sprata">
+        <img src="images/S2A1.jpg"    alt="Stan 2A">
+        <img src="images/S2A2.jpg"    alt="Stan 2B">
+        <img src="images/S2A3.jpg"    alt="Stan 2C">
+        <img src="images/S2A4.jpg"    alt="Stan 2D">
+      </div>
+    </section>
+
+    <section class="floor" id="floor4">
+      <div class="floor-header">
+        <span class="floor-number">03</span>
+        <div class="floor-header-content">
+          <div class="floor-accent-line"></div>
+          <h2>Treći Sprat</h2>
+        </div>
+      </div>
+      <div class="floor-gallery mobile-scroll">
+        <img src="images/Grupno3.jpg" alt="Raspored sprata">
+        <img src="images/S3A1.jpg"    alt="Stan 3A">
+        <img src="images/S3A2.jpg"    alt="Stan 3B">
+        <img src="images/S3A3.jpg"    alt="Stan 3C">
+        <img src="images/S3A4.jpg"    alt="Stan 3D">
+      </div>
+    </section>
+
+    <section class="floor" id="floor5">
+      <div class="floor-header">
+        <span class="floor-number">04</span>
+        <div class="floor-header-content">
+          <div class="floor-accent-line"></div>
+          <h2>Četvrti Sprat</h2>
+        </div>
+      </div>
+      <div class="floor-gallery mobile-scroll">
+        <img src="images/Grupno4.jpg" alt="Raspored sprata">
+        <img src="images/S4A1.jpg"    alt="Stan 4A">
+        <img src="images/S4A2.jpg"    alt="Stan 4B">
+        <img src="images/S4A3.jpg"    alt="Stan 4C">
+        <img src="images/S4A4.jpg"    alt="Stan 4D">
+      </div>
+    </section>
+
+    <section class="floor" id="floor6">
+      <div class="floor-header">
+        <span class="floor-number">05</span>
+        <div class="floor-header-content">
+          <div class="floor-accent-line"></div>
+          <h2>Peti Sprat — Penthouse</h2>
+        </div>
+      </div>
+      <div class="floor-gallery mobile-scroll">
+        <img src="images/Penthouse.jpg" alt="Penthouse">
+      </div>
+    </section>
+
+  </main>
+
+  <section id="contactInfo" class="contact-info">
+    <p>Email: <a href="mailto:aaaaaaaa@gmail.com">aaaaaaaa@gmail.com</a></p>
+    <p>Phone: <strong>+123 123 123 123</strong></p>
+  </section>
+
+
+
+  <script src="script.js"></script>
+  <script>
+
+    // ── LIGHTBOX ──
+document.querySelectorAll('.floor-gallery img').forEach(img => {
+  img.addEventListener('click', () => {
+    // Create lightbox
+    const lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.innerHTML = `
+      <img src="${img.src}" alt="${img.alt}">
+      <span class="lightbox-hint">Kliknite bilo gdje za zatvaranje</span>
+    `;
+    document.body.appendChild(lb);
+
+    // Disable page scroll
+    document.body.style.overflow = 'hidden';
+
+    // Function to close lightbox
+    const close = () => {
+      document.body.removeChild(lb);
+      document.body.style.overflow = ''; // restore scroll
+    };
+
+    // Close lightbox when clicking anywhere
+    lb.addEventListener('click', close);
+
+    // Close lightbox when clicking the close button
+    lb.querySelector('.lightbox-close').addEventListener('click', e => {
+      e.stopPropagation(); // prevent outer click from firing
+      close();
+    });
+  });
+});
+
+    // ── STICKY NAV — highlight closest floor only ──
+    const navLinks      = document.querySelectorAll('.floor-nav a');
+    const floorSections = document.querySelectorAll('.floor');
+    const floorNav      = document.getElementById('floorNav');
+
+    function updateActiveNav() {
+      const offset = (document.querySelector('.header')?.offsetHeight || 90)
+                   + (floorNav?.offsetHeight || 48) + 10;
+      let best = null, bestDist = Infinity;
+      floorSections.forEach(s => {
+        const dist = Math.abs(s.getBoundingClientRect().top - offset);
+        if (dist < bestDist) { bestDist = dist; best = s; }
+      });
+      if (best) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const a = document.querySelector(`.floor-nav a[href="#${best.id}"]`);
+        if (a) {
+          a.classList.add('active');
+          a.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+    }
+    window.addEventListener('scroll', updateActiveNav, { passive: true });
+    updateActiveNav();
+
+    // ── DRAG TO SCROLL (desktop) ──
+    document.querySelectorAll('.floor-gallery.mobile-scroll').forEach(g => {
+      let down = false, startX, scrollLeft;
+      g.addEventListener('mousedown',  e => { down = true; startX = e.pageX - g.offsetLeft; scrollLeft = g.scrollLeft; });
+      g.addEventListener('mouseleave', () => down = false);
+      g.addEventListener('mouseup',    () => down = false);
+      g.addEventListener('mousemove',  e => {
+        if (!down) return;
+        e.preventDefault();
+        g.scrollLeft = scrollLeft - (e.pageX - g.offsetLeft - startX) * 1.5;
+      });
+    });
+
+    // ── SMOOTH SCROLL to hash on load ──
+    if (window.location.hash) {
+      setTimeout(() => {
+        const t = document.querySelector(window.location.hash);
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 200);
+    }
+
+    // ── KEYBOARD for hamburger ──
+    document.getElementById('hamburger').addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.getElementById('hamburger').click(); }
+    });
+  </script>
+</body>
+</html>

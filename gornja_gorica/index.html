@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="me">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urban Living — Tri Objekta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    /* ═══════════════════════════════════════════
+       PAGE INTRO CURTAIN
+    ═══════════════════════════════════════════ */
+    .page-curtain {
+      position: fixed;
+      inset: 0;
+      background: #1a1a1a;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: curtainLift 0.8s 1.2s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+      pointer-events: none;
+    }
+    @keyframes curtainLift {
+      to { transform: translateY(-100%); opacity: 0; }
+    }
+    .curtain-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 5vw, 3rem);
+      color: #f2ede6;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: curtainTextIn 0.7s 0.2s ease forwards;
+    }
+    @keyframes curtainTextIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO TAGLINE
+    ═══════════════════════════════════════════ */
+    .hero-tagline {
+      text-align: center;
+      padding: 48px 24px 20px;
+      margin-top: 90px;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.6s ease forwards;
+    }
+    .hero-tagline p {
+      font-family: 'Quicksand', sans-serif;
+      font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #999;
+    }
+    .hero-line {
+      width: 40px;
+      height: 1px;
+      background: #006b5d;
+      margin: 18px auto 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: lineGrow 0.7s 2.2s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes lineGrow { to { transform: scaleX(1); } }
+
+    /* ═══════════════════════════════════════════
+       BUILDINGS GRID
+    ═══════════════════════════════════════════ */
+    .buildings-section {
+      padding: 40px 5% 20px;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.9s ease forwards;
+    }
+
+    .buildings-grid {
+      display: grid;
+      grid-template-columns: 2fr 1.4fr 1.2fr;
+      gap: 16px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .building-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .building-card .card-img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .building-card:hover .card-img { transform: scale(1.05); }
+
+    /* Gradient overlay */
+    .building-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+      transition: opacity 0.4s ease;
+    }
+
+    .card-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 2;
+      padding: 28px 24px 24px;
+      pointer-events: none;
+    }
+    .card-label .card-num {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      color: rgba(255,255,255,0.12);
+      line-height: 1;
+      display: block;
+      letter-spacing: -0.02em;
+      transition: color 0.4s ease;
+    }
+    .building-card:hover .card-num { color: rgba(255,255,255,0.2); }
+
+    .card-label .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.04em;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .card-label .card-floors {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      display: block;
+    }
+
+    /* Hover accent line */
+    .card-accent {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 3px;
+      background: #006b5d;
+      z-index: 3;
+      transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .building-card:hover .card-accent { width: 100%; }
+
+    /* ═══════════════════════════════════════════
+       STANOVI BUTTON
+    ═══════════════════════════════════════════ */
+    #pageWrapper {
+      -webkit-tap-highlight-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      opacity: 0;
+      animation: fadeUp 0.9s 2.4s ease forwards;
+    }
+
+    .btn-apartments {
+      position: relative;
+      overflow: hidden;
+      border: 1.5px solid #006b5d;
+      display: inline-block;
+      margin: 60px auto;
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 22px 70px;
+      background: rgb(0, 107, 93);
+      color: #ffffff;
+      transition: all 0.4s ease;
+    }
+    .btn-apartments::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #f2ede6;
+      transform: translateY(101%);
+      transition: transform 0.45s cubic-bezier(0.76, 0, 0.24, 1);
+      z-index: 0;
+    }
+    .btn-apartments:hover::before { transform: translateY(0); }
+    .btn-apartments span { position: relative; z-index: 1; transition: color 0.45s ease; }
+    .btn-apartments:hover span { color: #006b5d; }
+
+    /* ═══════════════════════════════════════════
+       HAMBURGER
+    ═══════════════════════════════════════════ */
+    .close-btn { display: none !important; }
+    .hamburger:hover { background: transparent; }
+    .hamburger.active:hover { background: transparent; }
+
+    /* ═══════════════════════════════════════════
+       OVERLAY MENU
+    ═══════════════════════════════════════════ */
+    .menu-overlay { background: #141414 !important; padding-top: 90px !important; }
+    .menu-overlay::before {
+      content: 'Urban Living';
+      position: absolute; top: 28px; left: 28px;
+      font-family: 'Playfair Display', serif;
+      font-size: .65rem; letter-spacing: .28em; text-transform: uppercase;
+      color: rgba(255,255,255,.15); pointer-events: none;
+    }
+    .menu-overlay::after {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 2px; height: 0; background: #006b5d;
+      transition: height .55s cubic-bezier(.22,1,.36,1);
+    }
+    .menu-overlay.active::after { height: 100%; }
+
+    .menu-overlay .menu-link {
+      font-family: 'Quicksand', sans-serif !important;
+      font-size: 1.1rem !important; font-weight: 600 !important;
+      letter-spacing: .16em !important; text-transform: uppercase !important;
+      color: rgba(255,255,255,.6) !important;
+      padding: 18px 28px !important; position: relative;
+      transition: color .3s ease !important; opacity: 0;
+    }
+    .menu-overlay .menu-link::after {
+      content: ''; position: absolute; bottom: 12px; left: 28px;
+      width: 0; height: 1px; background: #006b5d; transition: width .35s ease;
+    }
+    .menu-overlay .menu-link:hover        { color: #fff !important; }
+    .menu-overlay .menu-link:hover::after  { width: 28px; }
+    .menu-overlay .menu-link.active        { color: #fff !important; }
+    .menu-overlay .menu-link.active::after { width: 20px; }
+
+    .menu-overlay.active .menu-link { animation: menuSlideIn .45s ease forwards; }
+    .menu-overlay.active .menu-link:nth-child(1) { animation-delay: .05s; }
+    .menu-overlay.active .menu-link:nth-child(2) { animation-delay: .12s; }
+    .menu-overlay.active .menu-link:nth-child(3) { animation-delay: .19s; }
+    .menu-overlay.active .menu-link:nth-child(4) { animation-delay: .26s; }
+    @keyframes menuSlideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ═══════════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════════ */
+    .contact-info { position: relative; }
+    .contact-info::before {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 40px; height: 1px;
+      background: #006b5d; opacity: 0.5;
+    }
+    .contact-info p {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.9rem; letter-spacing: 0.08em;
+      margin-bottom: 8px; color: #666;
+    }
+    .contact-info a { color: #006b5d !important; position: relative; }
+    .contact-info a::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0;
+      width: 100%; height: 1px; background: #006b5d;
+      transform: scaleX(0); transform-origin: right;
+      transition: transform 0.4s ease;
+    }
+    .contact-info a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    /* ═══════════════════════════════════════════
+       FLOOR MODAL
+    ═══════════════════════════════════════════ */
+    .floor-list li {
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .floor-list li::before {
+      content: '';
+      position: absolute; left: 0; top: 50%;
+      transform: translateY(-50%) scaleY(0);
+      width: 3px; height: 55%; background: #006b5d;
+      border-radius: 2px; transition: transform 0.3s ease;
+    }
+    .floor-list li:hover::before { transform: translateY(-50%) scaleY(1); }
+    .floor-list li:hover { padding-left: 18px !important; color: #006b5d !important; }
+    .floor-num {
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      color: #bbb; font-family: 'Quicksand', sans-serif;
+      transition: color 0.3s ease;
+    }
+    .floor-list li:hover .floor-num { color: #006b5d; }
+    .modal.active .floor-list li { animation: fadeUp 0.4s ease both; }
+    .modal.active .floor-list li:nth-child(1) { animation-delay: 0.05s; }
+    .modal.active .floor-list li:nth-child(2) { animation-delay: 0.10s; }
+    .modal.active .floor-list li:nth-child(3) { animation-delay: 0.15s; }
+    .modal.active .floor-list li:nth-child(4) { animation-delay: 0.20s; }
+    .modal.active .floor-list li:nth-child(5) { animation-delay: 0.25s; }
+
+    /* Modal building selector */
+    .modal-building-tabs {
+      display: flex; gap: 0;
+      margin-bottom: 28px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .modal-tab {
+      flex: 1; padding: 10px 8px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.68rem; letter-spacing: 0.18em;
+      text-transform: uppercase; cursor: pointer;
+      color: #aaa; text-align: center;
+      border-bottom: 2px solid transparent;
+      transition: color 0.3s, border-color 0.3s;
+      margin-bottom: -1px;
+    }
+    .modal-tab.active { color: #006b5d; border-color: #006b5d; }
+
+    .modal-floors-panel { display: none; }
+    .modal-floors-panel.active { display: block; }
+
+    .modal-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 600;
+      margin-bottom: 4px; color: #2b2b2b;
+    }
+    .modal-subtitle {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.7rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: #aaa;
+      margin-bottom: 24px;
+    }
+
+    /* ═══════════════════════════════════════════
+       MOBILE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .buildings-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .building-card:first-child {
+        grid-column: 1 / -1;
+      }
+      .building-card .card-img { height: 340px; }
+    }
+
+    @media (max-width: 600px) {
+      .buildings-grid { grid-template-columns: 1fr; }
+      .building-card:first-child { grid-column: auto; }
+      .building-card .card-img { height: 280px; }
+      .btn-apartments {
+        font-size: 18px !important;
+        padding: 18px 48px !important;
+        letter-spacing: 3px !important;
+      }
+    }
+
+  </style>
+</head>
+<body id="top">
+
+  <!-- PAGE CURTAIN -->
+  <div class="page-curtain">
+    <span class="curtain-logo">Urban Living</span>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <a href="index.html" class="logo">
+      <img src="images/urbanlivinglogo.png" alt="Urban Living Logo">
+    </a>
+  </header>
+
+  <!-- HAMBURGER -->
+  <div class="hamburger" id="hamburger" role="button" tabindex="0" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </div>
+
+  <!-- OVERLAY MENU -->
+  <div class="menu-overlay" id="menuOverlay">
+    <a href="index.html"   class="menu-link active">Početna</a>
+    <a href="#contactInfo" class="menu-link">Kontakt</a>
+    <a href="#"            class="menu-link" id="menuStanovi">Objekti</a>
+    <a href="https://www.instagram.com/" target="_blank" class="menu-link">Instagram</a>
+  </div>
+  <div id="menuDim"></div>
+
+  <!-- HERO TAGLINE -->
+  <div class="hero-tagline">
+    <p>Tri objekta · Urban Living</p>
+    <div class="hero-line"></div>
+  </div>
+
+  <!-- BUILDINGS GRID -->
+  <section class="buildings-section">
+    <div class="buildings-grid">
+
+      <!-- Building 1 — Largest -->
+      <a href="objekat1.html" class="building-card">
+        <img class="card-img" src="images\PESIC PARKETI\1_zgrada\PESIC PARKETI-09.png" alt="Objekat 1">
+        <div class="card-label">
+          <span class="card-num">01</span>
+          <span class="card-name">Objekat 1</span>
+          <span class="card-floors">Podrum · Prizemlje · 2 Sprata · Potkrovlje</span>
+        </div>
+        <div class="card-accent"></div>
+      </a>
+
+      <!-- Building 2 — Medium -->
+      <a href="objekat2.html" class="building-card">
+        <img class="card-img" src="images\PESIC PARKETI\2_zgrada\PESIC PARKETI-16.png" alt="Objekat 2">
+        <div class="card-label">
+          <span class="card-num">02</span>
+          <span class="card-name">Objekat 2</span>
+          <span class="card-floors">Podrum · Prizemlje · 2 Sprata</span>
+        </div>
+        <div class="card-accent"></div>
+      </a>
+
+      <!-- Building 3 — Smallest -->
+      <a href="objekat3.html" class="building-card">
+        <img class="card-img" src="images\PESIC PARKETI\3_zgrada\PESIC PARKETI-24.png" alt="Objekat 3">
+        <div class="card-label">
+          <span class="card-num">03</span>
+          <span class="card-name">Objekat 3</span>
+          <span class="card-floors">Podrum · Prizemlje · 1 Sprat · Potkrovlje</span>
+        </div>
+        <div class="card-accent"></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- OBJEKTI BUTTON -->
+  <div id="pageWrapper">
+    <a href="#" class="btn-apartments" id="openFloors"><span>Objekti</span></a>
+  </div>
+
+  <!-- CONTACT INFO -->
+  <section id="contactInfo" class="contact-info">
+    <p>Email: <a href="mailto:info@urbanliving.me">info@urbanliving.me</a></p>
+    <p>Phone: <strong>+382 XX XXX XXX</strong></p>
+  </section>
+
+  <!-- FLOOR/BUILDING SELECTOR MODAL -->
+  <div class="modal" id="floorModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+
+      <h3>Odaberite objekat</h3>
+      <p class="modal-subtitle">i etažu koja vas zanima</p>
+
+      <!-- Tabs -->
+      <div class="modal-building-tabs">
+        <div class="modal-tab active" data-tab="b1">Objekat 1</div>
+        <div class="modal-tab"       data-tab="b2">Objekat 2</div>
+        <div class="modal-tab"       data-tab="b3">Objekat 3</div>
+      </div>
+
+      <!-- Building 1 floors -->
+      <div class="modal-floors-panel active" id="panel-b1">
+        <ul class="floor-list">
+          <li data-href="objekat1.html#floor1">Podrum       <span class="floor-num">B</span></li>
+          <li data-href="objekat1.html#floor2">Prizemlje    <span class="floor-num">00</span></li>
+          <li data-href="objekat1.html#floor3">1 Sprat      <span class="floor-num">01</span></li>
+          <li data-href="objekat1.html#floor4">2 Sprat      <span class="floor-num">02</span></li>
+          <li data-href="objekat1.html#floor5">Potkrovlje   <span class="floor-num">PK</span></li>
+        </ul>
+      </div>
+
+      <!-- Building 2 floors -->
+      <div class="modal-floors-panel" id="panel-b2">
+        <ul class="floor-list">
+          <li data-href="objekat2.html#floor1">Podrum       <span class="floor-num">B</span></li>
+          <li data-href="objekat2.html#floor2">Prizemlje    <span class="floor-num">00</span></li>
+          <li data-href="objekat2.html#floor3">1 Sprat      <span class="floor-num">01</span></li>
+          <li data-href="objekat2.html#floor4">2 Sprat      <span class="floor-num">02</span></li>
+        </ul>
+      </div>
+
+      <!-- Building 3 floors -->
+      <div class="modal-floors-panel" id="panel-b3">
+        <ul class="floor-list">
+          <li data-href="objekat3.html#floor1">Podrum       <span class="floor-num">B</span></li>
+          <li data-href="objekat3.html#floor2">Prizemlje    <span class="floor-num">00</span></li>
+          <li data-href="objekat3.html#floor3">1 Sprat      <span class="floor-num">01</span></li>
+          <li data-href="objekat3.html#floor4">Potkrovlje   <span class="floor-num">PK</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // ── BUILDING TAB SWITCHING ──
+    document.querySelectorAll('.modal-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.modal-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.modal-floors-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // ── FLOOR LIST NAVIGATION ──
+    document.querySelectorAll('.floor-list li[data-href]').forEach(item => {
+      item.addEventListener('click', () => {
+        window.location.href = item.getAttribute('data-href');
+      });
+    });
+
+    // ── KEYBOARD for hamburger ──
+    document.getElementById('hamburger').addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        document.getElementById('hamburger').click();
+      }
+    });
+  </script>
+</body>
+</html>
