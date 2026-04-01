@@ -1,12 +1,49 @@
 <!DOCTYPE html>
 <html lang="me">
 <head>
+
+
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Urban Living — Tri Objekta</title>
+  <title>Urban Living — UpperGorica</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
+
+    /* ═══════════════════════════════════════════
+       BACK BUTTON
+    ═══════════════════════════════════════════ */
+    .back-btn {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #2b2b2b;
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeUp 0.6s 1.9s ease forwards;
+      transition: color 0.3s;
+    }
+    .back-btn::before {
+      content: '←';
+      font-size: 0.9rem;
+      transition: transform 0.3s;
+    }
+    .back-btn:hover { color: #006b5d; }
+    .back-btn:hover::before { transform: translateX(-4px); }
+
+    @media (max-width: 768px) {
+      .back-btn { top: 16px; left: 16px; }
+    }
 
     /* ═══════════════════════════════════════════
        PAGE INTRO CURTAIN
@@ -375,11 +412,15 @@
 
   </style>
 </head>
+
 <body id="top">
+
+  <!-- BACK BUTTON -->
+  <a href="../index.html" class="back-btn">Nazad</a>
 
   <!-- PAGE CURTAIN -->
   <div class="page-curtain">
-    <span class="curtain-logo">Urban Living</span>
+    <span class="curtain-logo">Upper Gorica</span>
   </div>
 
   <!-- HEADER -->
@@ -405,7 +446,7 @@
 
   <!-- HERO TAGLINE -->
   <div class="hero-tagline">
-    <p>Tri objekta · Urban Living</p>
+    <p>UpperGorica · Urban Living</p>
     <div class="hero-line"></div>
   </div>
 
@@ -456,8 +497,9 @@
 
   <!-- CONTACT INFO -->
   <section id="contactInfo" class="contact-info">
-    <p>Email: <a href="mailto:info@urbanliving.me">info@urbanliving.me</a></p>
-    <p>Phone: <strong>+382 XX XXX XXX</strong></p>
+    <p>Email: <a href="mailto:urbanlivingmontenegro@gmail.com">urbanlivingmontenegro@gmail.com</a></p>
+        <div class="cd-value"><a href="tel:+38267722424">+382 67 722 424</a></div>
+        <div class="cd-value"><a href="tel:+38267165699">+382 67 165 669</a></div>
   </section>
 
   <!-- FLOOR/BUILDING SELECTOR MODAL -->
@@ -466,7 +508,6 @@
       <span class="close-modal" id="closeModal">&times;</span>
 
       <h3>Odaberite objekat</h3>
-      <p class="modal-subtitle">i etažu koja vas zanima</p>
 
       <!-- Tabs -->
       <div class="modal-building-tabs">

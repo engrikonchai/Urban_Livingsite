@@ -274,9 +274,9 @@ nav.scrolled .nav-contact:hover { color: var(--green); }
   display: flex; gap: 18px; margin-top: 14px;
   padding-top: 14px; border-top: 1px solid rgba(242,237,230,0.08);
 }
-.pmeta { font-size: 0.68rem; color: rgba(242,237,230,0.5); }
+.pmeta { font-size: 20px; color: rgba(242,237,230,0.5); }
 .pmeta strong {
-  display: block; font-size: 0.9rem;
+  display: block; font-size: 50px;
   font-family: 'Playfair Display', serif;
   color: #8ecec5; margin-bottom: 2px;
 }
