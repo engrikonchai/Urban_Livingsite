@@ -264,16 +264,13 @@ nav.scrolled .nav-contact:hover { color: var(--green); }
 
 .project-name {
   font-family: 'Playfair Display', serif;
-  font-size: 30px; font-weight: 400; color: var(--cream);
+  font-size: 25px; font-weight: 400; color: var(--cream);
 }
 .project-loc {
   font-size: 0.68rem; letter-spacing: 0.08em;
   color: rgba(242,237,230,0.42); margin-top: 4px;
 }
-.project-meta {
-  display: flex; gap: 18px; margin-top: 14px;
-  padding-top: 14px; border-top: 1px solid rgba(242,237,230,0.08);
-}
+
 .pmeta { font-size: 20px; color: rgba(242,237,230,0.5); }
 .pmeta strong {
   display: block; font-size: 30px;
