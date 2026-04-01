@@ -264,7 +264,7 @@ nav.scrolled .nav-contact:hover { color: var(--green); }
 
 .project-name {
   font-family: 'Playfair Display', serif;
-  font-size: 1.45rem; font-weight: 400; color: var(--cream);
+  font-size: 30px; font-weight: 400; color: var(--cream);
 }
 .project-loc {
   font-size: 0.68rem; letter-spacing: 0.08em;
