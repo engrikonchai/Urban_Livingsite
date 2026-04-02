@@ -1,52 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="me">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Urban Living — Ekskluzivni stanovi u Podgorici. Zeta Rezident, Upper Gorica i Zabjelo projekti."/>
   <title>Urban Living — Ekskluzivni Stanovi, Podgorica</title>
+
+  <!-- Preconnect for faster font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
 
 <!-- CURTAIN -->
-<div class="curtain">
+<div class="curtain" aria-hidden="true">
   <span class="curtain-text">Urban<span> Living</span></span>
 </div>
 
 <!-- NAV -->
-<nav id="nav">
+<nav id="nav" role="navigation" aria-label="Glavna navigacija">
   <a href="#hero" class="nav-logo">Urban<span> Living</span></a>
+  <div class="nav-links">
+    <a href="#projects" class="nav-link">Projekti</a>
+    <a href="#contact"  class="nav-link">Kontakt</a>
+  </div>
 </nav>
 
 <!-- HAMBURGER (mobile) -->
-<div class="hamburger" id="hamburger">
+<button class="hamburger" id="hamburger" aria-label="Otvori meni" aria-expanded="false" aria-controls="mobMenu">
   <span></span><span></span><span></span>
-</div>
-<div class="mob-menu" id="mobMenu">
+</button>
+<nav class="mob-menu" id="mobMenu" aria-label="Mobilna navigacija">
   <a href="#projects">Projekti</a>
   <a href="#contact">Kontakt</a>
-</div>
-<div class="mob-dim" id="mobDim"></div>
+</nav>
+<div class="mob-dim" id="mobDim" aria-hidden="true"></div>
 
-<!-- ═══════════════════════════════════════
-     SLIDE 1 — HERO
-     (pozadinska slika se mijenja u style.css -> .hero-bg)
-════════════════════════════════════════ -->
-<section class="slide" id="hero">
-  <div class="hero-bg"></div>
-
-  <div class="scroll-hint">
+<!-- HERO -->
+<section class="slide" id="hero" aria-label="Hero sekcija">
+  <div class="hero-bg" role="img" aria-label="Urban Living zgrada"></div>
+  <div class="scroll-hint" aria-hidden="true">
     <div class="scroll-arrow"></div>
     <span>Skrolujte</span>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     SLIDE 2 — PROJEKTI
-     (dodajte/izmijenite kartice projekata ispod)
-════════════════════════════════════════ -->
-<section class="projects-slide" id="projects">
+<!-- PROJEKTI -->
+<section class="projects-slide" id="projects" aria-label="Naši projekti">
   <div class="section-head">
     <div>
       <div class="label">Naši Projekti</div>
@@ -55,47 +57,32 @@
 
   <div class="projects-grid">
 
-    <!-- PROJEKAT 1 (veliki / featured) — klik otvara Zeta Rezident sajt -->
-    <a href="Urban_Living/index.html" target="_blank" style="display:contents;">
-      <div class="project-card featured">
-        <img class="project-img" src="images\Projekat1.jpg" alt="Meridijan Tower"/>
+    <a href="Urban_Living/index.html" class="project-card-link" aria-label="Zeta Rezident projekat">
+      <div class="project-card">
+        <img class="project-img" src="images/Projekat1.jpg" alt="Zeta Rezident" loading="lazy" decoding="async"/>
         <div class="project-overlay">
           <span class="project-badge badge-sale">U Prodaji</span>
           <div class="project-name">Zeta Rezident</div>
-          <div class="project-meta">
-
-
-          </div>
         </div>
       </div>
     </a>
 
-    <!-- PROJEKAT 2 -->
-    <a href="gornja_gorica/index.html" target="_blank" style="display:contents;">
-      <div class="project-card featured">
-        <img class="project-img" src="images\PESIC PARKETI-09.png" alt="Meridijan Tower"/>
+    <a href="gornja_gorica/index.html" class="project-card-link" aria-label="Upper Gorica projekat">
+      <div class="project-card">
+        <img class="project-img" src="images/PESIC PARKETI-09.png" alt="Upper Gorica" loading="lazy" decoding="async"/>
         <div class="project-overlay">
           <span class="project-badge badge-sale">U Prodaji</span>
           <div class="project-name">Upper Gorica</div>
-          <div class="project-meta">
-
-
-          </div>
         </div>
       </div>
     </a>
 
-    <!-- PROJEKAT 3 -->
-        <a href="Zabjelo/objekat3.html" target="_blank" style="display:contents;">
-      <div class="project-card featured">
-        <img class="project-img" src="images\Pogled2.png" alt="Meridijan Tower"/>
+    <a href="Zabjelo/objekat3.html" class="project-card-link" aria-label="Zabjelo projekat">
+      <div class="project-card">
+        <img class="project-img" src="images/Pogled2.png" alt="Zabjelo" loading="lazy" decoding="async"/>
         <div class="project-overlay">
           <span class="project-badge badge-sale">U Prodaji</span>
           <div class="project-name">Zabjelo</div>
-          <div class="project-meta">
-
-
-          </div>
         </div>
       </div>
     </a>
@@ -103,40 +90,26 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════
-     SLIDE 3 — KONTAKT
-     (zamijenite placeholder podatke ispod)
-════════════════════════════════════════ -->
-<section class="contact-slide" id="contact">
+<!-- KONTAKT -->
+<section class="contact-slide" id="contact" aria-label="Kontakt informacije">
   <div class="label">Kontakt</div>
   <h2 class="sec-title">Kontaktirajte <em>Nas</em></h2>
 
   <div class="contact-info-block">
 
     <div class="contact-detail">
-      <div class="cd-icon">📍</div>
-      <div>
-        <div class="cd-label">Adresa</div>
-        <!-- VAŠA ADRESA OVDJE -->
-        <div class="cd-value">ulica bb, Podgorica</div>
-      </div>
-    </div>
-
-    <div class="contact-detail">
-      <div class="cd-icon">📞</div>
+      <div class="cd-icon" aria-hidden="true">📞</div>
       <div>
         <div class="cd-label">Telefon</div>
-        <!-- VAŠ BROJ OVDJE -->
         <div class="cd-value"><a href="tel:+38267722424">+382 67 722 424</a></div>
         <div class="cd-value"><a href="tel:+38267165699">+382 67 165 669</a></div>
       </div>
     </div>
 
     <div class="contact-detail">
-      <div class="cd-icon">✉️</div>
+      <div class="cd-icon" aria-hidden="true">✉️</div>
       <div>
         <div class="cd-label">Email</div>
-        <!-- VAŠ EMAIL OVDJE -->
         <div class="cd-value"><a href="mailto:urbanlivingmontenegro@gmail.com">urbanlivingmontenegro@gmail.com</a></div>
       </div>
     </div>
@@ -146,12 +119,9 @@
 
 <!-- FOOTER -->
 <footer>
-  <!-- NAZIV KOMPANIJE OVDJE -->
   <div class="footer-logo">Urban<span> Living</span></div>
-  <!-- COPYRIGHT OVDJE -->
   <div class="footer-copy">© 2026 Urban Living d.o.o. · Podgorica, Crna Gora</div>
-  <div class="footer-social">
-  </div>
+  <div class="footer-social"></div>
 </footer>
 
 <script src="script.js"></script>

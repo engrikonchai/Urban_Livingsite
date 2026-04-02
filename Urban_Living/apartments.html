@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="me">
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="Stanovi po spratovima, Zeta Rezident — Urban Living Podgorica.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stanovi — Urban Living</title>
+  <title>Stanovi — Zeta Rezident</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
@@ -321,7 +324,7 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/Prizemlje.jpg" alt="Prizemlje">
+        <img loading="lazy" decoding="async" src="images/Prizemlje.jpg" alt="Prizemlje">
       </div>
     </section>
 
@@ -334,11 +337,11 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/Grupno1.jpg" alt="Raspored sprata">
-        <img src="images/S1A1.jpg"    alt="Stan 1A">
-        <img src="images/S1A2.jpg"    alt="Stan 1B">
-        <img src="images/S1A3.jpg"    alt="Stan 1C">
-        <img src="images/S1A4.jpg"    alt="Stan 1D">
+        <img loading="lazy" decoding="async" src="images/Grupno1.jpg" alt="Raspored sprata">
+        <img loading="lazy" decoding="async" src="images/S1A1.jpg"    alt="Stan 1A">
+        <img loading="lazy" decoding="async" src="images/S1A2.jpg"    alt="Stan 1B">
+        <img loading="lazy" decoding="async" src="images/S1A3.jpg"    alt="Stan 1C">
+        <img loading="lazy" decoding="async" src="images/S1A4.jpg"    alt="Stan 1D">
       </div>
     </section>
 
@@ -351,11 +354,11 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/Grupno2.jpg" alt="Raspored sprata">
-        <img src="images/S2A1.jpg"    alt="Stan 2A">
-        <img src="images/S2A2.jpg"    alt="Stan 2B">
-        <img src="images/S2A3.jpg"    alt="Stan 2C">
-        <img src="images/S2A4.jpg"    alt="Stan 2D">
+        <img loading="lazy" decoding="async" src="images/Grupno2.jpg" alt="Raspored sprata">
+        <img loading="lazy" decoding="async" src="images/S2A1.jpg"    alt="Stan 2A">
+        <img loading="lazy" decoding="async" src="images/S2A2.jpg"    alt="Stan 2B">
+        <img loading="lazy" decoding="async" src="images/S2A3.jpg"    alt="Stan 2C">
+        <img loading="lazy" decoding="async" src="images/S2A4.jpg"    alt="Stan 2D">
       </div>
     </section>
 
@@ -368,11 +371,11 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/Grupno3.jpg" alt="Raspored sprata">
-        <img src="images/S3A1.jpg"    alt="Stan 3A">
-        <img src="images/S3A2.jpg"    alt="Stan 3B">
-        <img src="images/S3A3.jpg"    alt="Stan 3C">
-        <img src="images/S3A4.jpg"    alt="Stan 3D">
+        <img loading="lazy" decoding="async" src="images/Grupno3.jpg" alt="Raspored sprata">
+        <img loading="lazy" decoding="async" src="images/S3A1.jpg"    alt="Stan 3A">
+        <img loading="lazy" decoding="async" src="images/S3A2.jpg"    alt="Stan 3B">
+        <img loading="lazy" decoding="async" src="images/S3A3.jpg"    alt="Stan 3C">
+        <img loading="lazy" decoding="async" src="images/S3A4.jpg"    alt="Stan 3D">
       </div>
     </section>
 
@@ -385,11 +388,11 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/Grupno4.jpg" alt="Raspored sprata">
-        <img src="images/S4A1.jpg"    alt="Stan 4A">
-        <img src="images/S4A2.jpg"    alt="Stan 4B">
-        <img src="images/S4A3.jpg"    alt="Stan 4C">
-        <img src="images/S4A4.jpg"    alt="Stan 4D">
+        <img loading="lazy" decoding="async" src="images/Grupno4.jpg" alt="Raspored sprata">
+        <img loading="lazy" decoding="async" src="images/S4A1.jpg"    alt="Stan 4A">
+        <img loading="lazy" decoding="async" src="images/S4A2.jpg"    alt="Stan 4B">
+        <img loading="lazy" decoding="async" src="images/S4A3.jpg"    alt="Stan 4C">
+        <img loading="lazy" decoding="async" src="images/S4A4.jpg"    alt="Stan 4D">
       </div>
     </section>
 
@@ -402,7 +405,7 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/Penthouse.jpg" alt="Penthouse">
+        <img loading="lazy" decoding="async" src="images/Penthouse.jpg" alt="Penthouse">
       </div>
     </section>
 
@@ -426,7 +429,7 @@ document.querySelectorAll('.floor-gallery img').forEach(img => {
     const lb = document.createElement('div');
     lb.className = 'lightbox';
     lb.innerHTML = `
-      <img src="${img.src}" alt="${img.alt}">
+      <img loading="lazy" decoding="async" src="${img.src}" alt="${img.alt}">
       <span class="lightbox-hint">Kliknite bilo gdje za zatvaranje</span>
     `;
     document.body.appendChild(lb);

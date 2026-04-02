@@ -2,8 +2,11 @@
 <html lang="me">
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="Objekat 2, Upper Gorica — Urban Living Podgorica.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Objekat 2 — Urban Living</title>
+  <title>Objekat 2 — Upper Gorica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
@@ -266,8 +269,8 @@
 
   <!-- BUILDING HERO — 2 images -->
 <div class="building-hero-dual">
-    <img src="images/PESIC PARKETI/2_zgrada/PESIC PARKETI-16.png" alt="Objekat 2 — pogled 1">
-    <img src="images/PESIC PARKETI/2_zgrada/PESIC PARKETI-17.png" alt="Objekat 2 — pogled 2">
+    <img loading="lazy" decoding="async" src="images/PESIC PARKETI/2_zgrada/PESIC PARKETI-16.png" alt="Objekat 2 — pogled 1">
+    <img loading="lazy" decoding="async" src="images/PESIC PARKETI/2_zgrada/PESIC PARKETI-17.png" alt="Objekat 2 — pogled 2">
     <div class="building-hero-label">
       <span class="b-num">02</span>
       <span class="b-name">Objekat 2</span>
@@ -293,7 +296,7 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/PESIC PARKETI/2_zgrada/podrum.png" alt="Podrum — Objekat 2">
+        <img loading="lazy" decoding="async" src="images/PESIC PARKETI/2_zgrada/podrum.png" alt="Podrum — Objekat 2">
       </div>
     </section>
 
@@ -306,7 +309,7 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/PESIC PARKETI/2_zgrada/prizemlje.png" alt="Prizemlje — Objekat 2">
+        <img loading="lazy" decoding="async" src="images/PESIC PARKETI/2_zgrada/prizemlje.png" alt="Prizemlje — Objekat 2">
       </div>
     </section>
 
@@ -319,7 +322,7 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/PESIC PARKETI/2_zgrada/prvi_sprat.png" alt="1 Sprat — Objekat 2">
+        <img loading="lazy" decoding="async" src="images/PESIC PARKETI/2_zgrada/prvi_sprat.png" alt="1 Sprat — Objekat 2">
       </div>
     </section>
 
@@ -332,7 +335,7 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/PESIC PARKETI/2_zgrada/drugi_sprat.png" alt="2 Sprat — Objekat 2">
+        <img loading="lazy" decoding="async" src="images/PESIC PARKETI/2_zgrada/drugi_sprat.png" alt="2 Sprat — Objekat 2">
       </div>
     </section>
 
@@ -350,7 +353,7 @@
       img.addEventListener('click', () => {
         const lb = document.createElement('div');
         lb.className = 'lightbox';
-        lb.innerHTML = `<img src="${img.src}" alt="${img.alt}"><span class="lightbox-hint">Kliknite bilo gdje za zatvaranje</span>`;
+        lb.innerHTML = `<img loading="lazy" decoding="async" src="${img.src}" alt="${img.alt}"><span class="lightbox-hint">Kliknite bilo gdje za zatvaranje</span>`;
         document.body.appendChild(lb);
         document.body.style.overflow = 'hidden';
         const close = () => { document.body.removeChild(lb); document.body.style.overflow = ''; };

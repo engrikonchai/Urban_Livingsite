@@ -11,8 +11,13 @@
   --border:   rgba(0,107,93,0.15);
 }
 
-html { scroll-behavior: smooth;}
-body { font-family: 'Quicksand', sans-serif; background: var(--dark); color: var(--charcoal); overflow-x: hidden; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: var(--dark);
+  color: var(--charcoal);
+  overflow-x: hidden;
+}
 
 /* ── CURTAIN ── */
 .curtain {
@@ -36,7 +41,7 @@ body { font-family: 'Quicksand', sans-serif; background: var(--dark); color: var
 @keyframes lineGrow { to { transform: scaleX(1); } }
 
 /* ── NAV ── */
-nav {
+nav#nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 800;
   height: 76px; display: flex; align-items: center;
   padding: 0 48px; justify-content: space-between;
@@ -45,9 +50,10 @@ nav {
   border-bottom: 1px solid transparent;
   opacity: 0; animation: fadeIn 0.6s 1.8s ease forwards;
 }
-nav.scrolled {
+nav#nav.scrolled {
   background: rgba(242,237,230,0.95);
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-color: var(--border);
 }
 .nav-logo {
@@ -56,120 +62,44 @@ nav.scrolled {
   color: var(--cream); text-decoration: none;
   transition: color 0.4s;
 }
-nav.scrolled .nav-logo { color: var(--charcoal); }
+nav#nav.scrolled .nav-logo { color: var(--charcoal); }
 .nav-logo span { color: var(--green); }
 
-.nav-contact {
-  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--cream);
-  text-decoration: none; opacity: 0.7;
-  transition: opacity 0.3s, color 0.4s;
+/* Desktop nav links */
+.nav-links {
+  display: flex; align-items: center; gap: 32px;
 }
-.nav-contact:hover { opacity: 1; }
-nav.scrolled .nav-contact { color: var(--mid); }
-nav.scrolled .nav-contact:hover { color: var(--green); }
+.nav-link {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: rgba(242,237,230,0.7);
+  text-decoration: none; transition: color 0.3s, opacity 0.3s;
+  position: relative; padding-bottom: 2px;
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px; background: var(--green);
+  transition: width 0.3s;
+}
+.nav-link:hover { color: var(--cream); }
+.nav-link:hover::after { width: 100%; }
+nav#nav.scrolled .nav-link { color: var(--mid); }
+nav#nav.scrolled .nav-link:hover { color: var(--green); }
 
-/* ── SLIDE 1 — HERO ── */
+/* ── HERO ── */
 .slide {
   height: 100vh;
-  scroll-snap-align: start;
+  min-height: 500px;
   position: relative;
   overflow: hidden;
 }
 
 .hero-bg {
   position: absolute; inset: 0;
-
-  /*
-  ════════════════════════════════════════════════
-   HERO BACKGROUND — izaberite jednu od opcija ispod
-   (uklonite komentar sa željene, ostale zakomentirajte)
-  ════════════════════════════════════════════════
-
-  — OPCIJA 1 (trenutna): Moderni urbani neboder, staklena fasada —
-  background:
-    linear-gradient(to bottom, rgba(26,26,24,0.25) 0%, rgba(26,26,24,0.55) 55%, rgba(26,26,24,0.92) 100%),
-    url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1800&q=80') center/cover no-repeat;
-
-  — OPCIJA 2: Luksuzna bijela zgrada, čisti moderni stil —
-  background:
-    linear-gradient(to bottom, rgba(26,26,24,0.25) 0%, rgba(26,26,24,0.55) 55%, rgba(26,26,24,0.92) 100%),
-    url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1800&q=80') center/cover no-repeat;
-
-  — OPCIJA 3: Moderni stambeni kompleks, topli ton —
-  background:
-    linear-gradient(to bottom, rgba(26,26,24,0.25) 0%, rgba(26,26,24,0.55) 55%, rgba(26,26,24,0.92) 100%),
-    url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1800&q=80') center/cover no-repeat;
-
-  — OPCIJA 4: Ekskluzivna vila / rezidencija, arhitektura —
-  background:
-    linear-gradient(to bottom, rgba(26,26,24,0.25) 0%, rgba(26,26,24,0.55) 55%, rgba(26,26,24,0.92) 100%),
-    url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1800&q=80') center/cover no-repeat;
-
-  — VAŠA SLIKA: Zamijenite URL-om vaše fotografije —
-  background:
-    linear-gradient(to bottom, rgba(26,26,24,0.25) 0%, rgba(26,26,24,0.55) 55%, rgba(26,26,24,0.92) 100%),
-    url('VAŠA-SLIKA-OVDJE.jpg') center/cover no-repeat;
-  ════════════════════════════════════════════════
-  */
-
   background:
     linear-gradient(to bottom, rgba(26,26,24,0.25) 0%, rgba(26,26,24,0.55) 55%, rgba(26,26,24,0.92) 100%),
     url('images/background.png') center/cover no-repeat;
+  will-change: transform;
 }
-
-.hero-content {
-  position: relative; z-index: 2;
-  height: 100%; display: flex; flex-direction: column;
-  align-items: center; justify-content: flex-end;
-  text-align: center; padding-bottom: 90px;
-}
-
-.hero-tag {
-  font-size: 0.66rem; letter-spacing: 0.3em; text-transform: uppercase;
-  color: rgba(242,237,230,0.5); margin-bottom: 20px;
-  opacity: 0; animation: fadeUp 0.8s 1.9s ease forwards;
-}
-
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(3.2rem, 7.5vw, 7rem);
-  font-weight: 400; line-height: 1.06; color: var(--cream);
-  opacity: 0; animation: fadeUp 0.9s 2.1s ease forwards;
-}
-.hero h1 em { font-style: italic; color: #8ecec5; }
-
-.hero-line {
-  width: 36px; height: 1px; background: var(--green);
-  margin: 26px auto;
-  transform: scaleX(0); transform-origin: left;
-  animation: lineGrow 0.7s 2.65s ease forwards;
-}
-
-.hero-sub {
-  font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(242,237,230,0.45);
-  opacity: 0; animation: fadeUp 0.8s 2.4s ease forwards;
-}
-
-.hero-cta {
-  display: inline-block; margin-top: 40px;
-  font-family: 'Playfair Display', serif; font-size: 0.95rem;
-  letter-spacing: 0.1em; color: var(--cream);
-  background: var(--green); padding: 14px 48px;
-  text-decoration: none; border: 1.5px solid var(--green);
-  position: relative; overflow: hidden;
-  opacity: 0; animation: fadeUp 0.8s 2.85s ease forwards;
-  transition: color 0.4s;
-}
-.hero-cta::before {
-  content: ''; position: absolute; inset: 0;
-  background: var(--cream); transform: translateY(101%);
-  transition: transform 0.42s cubic-bezier(0.76,0,0.24,1); z-index: 0;
-}
-.hero-cta:hover::before { transform: translateY(0); }
-.hero-cta:hover { color: var(--green); }
-.hero-cta span { position: relative; z-index: 1; }
 
 /* scroll hint */
 .scroll-hint {
@@ -193,12 +123,13 @@ nav.scrolled .nav-contact:hover { color: var(--green); }
 }
 @keyframes scrollDrop { 0%{top:-100%} 60%{top:100%} 100%{top:100%} }
 
-/* ── SLIDE 2 — PROJECTS ── */
+/* ── PROJECTS ── */
 .projects-slide {
   background: var(--cream);
   min-height: 100vh;
-  scroll-snap-align: start;
   padding: 100px 6% 80px;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 800px;
 }
 
 .section-head {
@@ -220,31 +151,36 @@ nav.scrolled .nav-contact:hover { color: var(--green); }
 }
 .sec-title em { font-style: italic; color: var(--green); }
 
-.contact-link {
-  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--green);
-  text-decoration: none; display: flex; align-items: center; gap: 8px;
-  transition: gap 0.3s; white-space: nowrap; padding-bottom: 4px;
-}
-.contact-link::after { content: '→'; }
-.contact-link:hover { gap: 14px; }
-
+/* Project grid — 3 equal columns */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 3px;
+  gap: 12px;
 }
 
-.project-card { position: relative; overflow: hidden; background: #111; }
-.project-card.featured { grid-column: span 2; }
+/* Remove display:contents hack — use proper link wrapper */
+.project-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+  background: #111;
+  border-radius: 2px;
+  height: 100%;
+}
 
 .project-img {
-  width: 100%; height: 100%; min-height: 360px; object-fit: cover; display: block;
+  width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
   filter: saturate(0.8);
   transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s;
 }
-.project-card.featured .project-img { min-height: 480px; }
-.project-card:hover .project-img { transform: scale(1.06); filter: saturate(1.05); }
+.project-card-link:hover .project-img { transform: scale(1.06); filter: saturate(1.05); }
 
 .project-overlay {
   position: absolute; inset: 0;
@@ -264,22 +200,15 @@ nav.scrolled .nav-contact:hover { color: var(--green); }
 
 .project-name {
   font-family: 'Playfair Display', serif;
-  font-size: 25px; font-weight: 400; color: var(--cream);
+  font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 400; color: var(--cream);
 }
 
-
-.pmeta { font-size: 20px; color: rgba(242,237,230,0.5); }
-.pmeta strong {
-  display: block; font-size: 30px;
-  font-family: 'Playfair Display', serif;
-  color: #8ecec5; margin-bottom: 2px;
-}
-
-/* ── SLIDE 3 — CONTACT ── */
+/* ── CONTACT ── */
 .contact-slide {
   background: var(--dark);
   padding: 110px 7% 80px;
-  scroll-snap-align: start;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px;
 }
 .contact-slide .label { color: #8ecec5; }
 .contact-slide .label::before { background: #8ecec5; }
@@ -289,7 +218,7 @@ nav.scrolled .nav-contact:hover { color: var(--green); }
 .contact-info-block {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 3px;
+  gap: 12px;
   margin-top: 56px;
 }
 
@@ -299,8 +228,9 @@ nav.scrolled .nav-contact:hover { color: var(--green); }
   padding: 36px 32px;
   border: 1px solid rgba(255,255,255,0.05);
   transition: background 0.3s;
+  border-radius: 2px;
 }
-.contact-detail:hover { background: rgba(255,255,255,0.05); }
+.contact-detail:hover { background: rgba(255,255,255,0.06); }
 
 .cd-icon {
   width: 40px; height: 40px; flex-shrink: 0;
@@ -313,7 +243,7 @@ nav.scrolled .nav-contact:hover { color: var(--green); }
   color: var(--muted); margin-bottom: 5px; font-weight: 600;
 }
 .cd-value {
-  font-size: 0.95rem; color: var(--cream); font-weight: 500; line-height: 1.5;
+  font-size: 0.95rem; color: var(--cream); font-weight: 500; line-height: 1.8;
 }
 .cd-value a { color: var(--cream); text-decoration: none; transition: color 0.3s; }
 .cd-value a:hover { color: #8ecec5; }
@@ -331,20 +261,14 @@ footer {
 .footer-logo span { color: var(--green); }
 .footer-copy { font-size: 0.68rem; color: rgba(255,255,255,0.2); }
 .footer-social { display: flex; gap: 10px; }
-.social-btn {
-  width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.1);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--muted); text-decoration: none; font-size: 0.65rem; font-weight: 600;
-  transition: all 0.3s;
-}
-.social-btn:hover { border-color: var(--green); color: var(--green); }
 
 /* ── HAMBURGER / MOBILE MENU ── */
 .hamburger {
-  display: none; position: fixed; right: 18px; top: 16px;
+  display: none; position: fixed; right: 18px; top: 18px;
   width: 48px; height: 48px; z-index: 9000;
   flex-direction: column; justify-content: center; align-items: center; gap: 5px;
-  cursor: pointer; -webkit-tap-highlight-color: transparent; border-radius: 50%;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  border-radius: 50%; background: none; border: none; padding: 0;
 }
 .hamburger span {
   display: block; height: 2px; border-radius: 2px; background: var(--cream);
@@ -360,7 +284,7 @@ footer {
 .hamburger.active span:nth-child(3) { width: 22px; transform: translateY(-7px) rotate(-45deg); }
 
 .mob-menu {
-  position: fixed; top: 0; right: 0; width: 260px; height: 100%;
+  position: fixed; top: 0; right: 0; width: min(260px, 80vw); height: 100%;
   background: var(--dark); z-index: 8500;
   display: flex; flex-direction: column; padding-top: 100px;
   transform: translateX(100%); opacity: 0;
@@ -377,6 +301,7 @@ footer {
   padding: 18px 32px; color: rgba(255,255,255,0.5);
   font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase;
   font-weight: 600; text-decoration: none; transition: color 0.3s; opacity: 0;
+  min-height: 56px; display: flex; align-items: center;
 }
 .mob-menu.active a { animation: mobSlide 0.4s ease forwards; }
 .mob-menu.active a:nth-child(1) { animation-delay: 0.06s; }
@@ -390,23 +315,37 @@ footer {
 }
 .mob-dim.active { display: block; }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE — Tablet ── */
 @media (max-width: 900px) {
-  nav { padding: 0 24px; }
-  .nav-contact { display: none; }
+  nav#nav { padding: 0 24px; }
+  .nav-links { display: none; }
   .hamburger { display: flex; }
-  .projects-grid { grid-template-columns: 1fr 1fr; }
-  .project-card.featured { grid-column: span 2; }
-  .contact-info-block { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 600px) {
-  .hero h1 { font-size: 2.8rem; }
-  .projects-slide { padding: 90px 4% 60px; }
-  .projects-grid { grid-template-columns: 1fr; }
-  .project-card.featured { grid-column: span 1; }
-  .project-card.featured .project-img { min-height: 320px; }
-  .section-head { flex-direction: column; align-items: flex-start; gap: 16px; }
-  .contact-slide { padding: 80px 6% 60px; }
+  .projects-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
   .contact-info-block { grid-template-columns: 1fr; }
-  footer { flex-direction: column; gap: 16px; text-align: center; }
+  .projects-slide { padding: 90px 5% 60px; }
+}
+
+/* ── RESPONSIVE — Mobile ── */
+@media (max-width: 600px) {
+  .slide { min-height: 100svh; } /* use svh for mobile browser chrome */
+  .projects-slide { padding: 80px 4% 50px; }
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .project-img { aspect-ratio: 16/10; }
+  .section-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .contact-slide { padding: 80px 5% 60px; }
+  .contact-detail { padding: 24px 20px; }
+  footer { flex-direction: column; gap: 12px; text-align: center; }
+  .footer-copy { font-size: 0.62rem; }
+}
+
+/* ── Focus styles for accessibility ── */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
 }

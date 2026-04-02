@@ -2,11 +2,15 @@
 <html lang="me">
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="Zabjelo objekat — Ekskluzivni stanovi, Podgorica.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Objekat 3 — Urban Living</title>
-  
+  <title>Zabjelo — Urban Living</title>
+
+  <!-- Preconnect to Google Fonts for faster font load -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
-  
+
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="objekat3.css">
 </head>
@@ -14,12 +18,6 @@
 
   <!-- BACK BUTTON -->
   <a href="../index.html" class="back-btn">Nazad</a>
-
- <!-- <header class="header">
-    <div class="logo">
-      <img src="images/urbanlivinglogo.png" alt="Urban Living Logo">
-    </div>
-  </header> -->
 
   <div class="hamburger" id="hamburger">
     <span></span>
@@ -32,11 +30,14 @@
     <a href="https://www.instagram.com/" target="_blank" class="menu-link">Instagram</a>
   </div>
 
+  <!-- HERO SLIDER -->
+  <!-- First image: eager + high priority so it shows instantly -->
+  <!-- Other images: lazy so they don't block page load -->
   <div class="building-hero-triple">
-    <img src="images/Pogled1.png" class="active" alt="Pogled 1">
-    <img src="images/Pogled2.png" alt="Pogled 2">
-    <img src="images/Pogled3.png" alt="Pogled 3">
-    
+    <img src="images/Pogled1.png" class="active" alt="Pogled 1" loading="eager" fetchpriority="high">
+    <img src="images/Pogled2.png" alt="Pogled 2" loading="lazy" decoding="async">
+    <img src="images/Pogled3.png" alt="Pogled 3" loading="lazy" decoding="async">
+
     <div class="hero-dots">
       <div class="dot active"></div>
       <div class="dot"></div>
@@ -44,6 +45,46 @@
     </div>
   </div>
 
+  <!-- 3D RENDERS SECTION -->
+  <div class="renders-section">
+    <div class="renders-divider">
+      <div class="renders-line"></div>
+      <span class="renders-tag">3D Vizualizacija</span>
+      <div class="renders-line"></div>
+    </div>
+    <div class="renders-strip">
+      <div class="render-card">
+        <img src="images/3D_Desno.png" alt="Desna strana" loading="lazy" decoding="async">
+        <div class="render-overlay">
+          <span class="render-label">Render</span>
+          <span class="render-title">Desna strana</span>
+        </div>
+      </div>
+      <div class="render-card">
+        <img src="images/3D_Lijevo.png" alt="Lijeva strana" loading="lazy" decoding="async">
+        <div class="render-overlay">
+          <span class="render-label">Render</span>
+          <span class="render-title">Lijeva strana</span>
+        </div>
+      </div>
+      <div class="render-card">
+        <img src="images/3D_ispred.png" alt="Prednja fasada" loading="lazy" decoding="async">
+        <div class="render-overlay">
+          <span class="render-label">Render</span>
+          <span class="render-title">Prednja fasada</span>
+        </div>
+      </div>
+      <div class="render-card">
+        <img src="images/3D_iza.png" alt="Zadnja fasada" loading="lazy" decoding="async">
+        <div class="render-overlay">
+          <span class="render-label">Render</span>
+          <span class="render-title">Zadnja fasada</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOOR NAV -->
   <nav class="floor-nav" id="floorNav">
     <a href="#floor1" class="active">Suteren</a>
     <a href="#floor2">Prizemlje</a>
@@ -62,7 +103,7 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/Suteren.png" alt="Suteren Plan">
+        <img src="images/Suteren.png" alt="Suteren Plan" loading="lazy" decoding="async">
       </div>
     </section>
 
@@ -75,7 +116,7 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/Prizemlje.png" alt="Prizemlje Plan">
+        <img src="images/Prizemlje.png" alt="Prizemlje Plan" loading="lazy" decoding="async">
       </div>
     </section>
 
@@ -88,7 +129,7 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/Sprat1.png" alt="Sprat 1 Plan">
+        <img src="images/Sprat1.png" alt="Sprat 1 Plan" loading="lazy" decoding="async">
       </div>
     </section>
 
@@ -101,14 +142,14 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img src="images/Sprat2.png" alt="Sprat 2 Plan">
+        <img src="images/Sprat2.png" alt="Sprat 2 Plan" loading="lazy" decoding="async">
       </div>
     </section>
 
   </main>
 
   <script src="script.js"></script>
-  <script src="objekat3.js"></script>
+  <script src="objekat3.js" defer></script>
 
 </body>
 </html>

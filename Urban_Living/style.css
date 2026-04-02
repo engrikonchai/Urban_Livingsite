@@ -1,13 +1,19 @@
 /* ============================================================
    RESET
    ============================================================ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* overflow-x MUST be on both html AND body — body alone doesn't stop the root viewport from scrolling */
+html {
+  overflow-x: hidden;
+}
 
 body {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   background-color: #f2ede6;
   color: #2b2b2b;
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 /* ============================================================
@@ -21,31 +27,33 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(242, 237, 230, 0.9);
-  backdrop-filter: blur(10px);
+  background: rgba(242, 237, 230, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   z-index: 2000;
   transition: height 0.3s ease, background 0.3s ease;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 .header.scrolled {
   height: 70px;
-  background: rgba(242, 237, 230, 0.9);
+  background: rgba(242, 237, 230, 0.97);
 }
 
-/* Make the link wrap only the image and remove blue highlight */
 .logo {
-  display: inline-block;                  /* shrink clickable area */
-  text-decoration: none;                  /* remove underline */
-  line-height: 0;                         /* no extra spacing */
-  -webkit-tap-highlight-color: transparent; /* remove blue highlight on mobile */
-  outline: none;                          /* remove focus outline */
+  display: inline-block;
+  text-decoration: none;
+  line-height: 0;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
 }
 
-/* Adjust the logo image */
 .logo img {
-  padding-top: 30px;                        /* remove extra clickable padding */
+  padding-top: 30px;
   height: 200px;
   width: auto;
+  /* Prevent logo from being wider than the screen (the root cause of horizontal scroll) */
+  max-width: calc(100vw - 80px);
   display: block;
   transition: height 0.3s ease, padding-top 0.3s ease;
 }
@@ -53,6 +61,7 @@ body {
 .header.scrolled .logo img {
   padding-top: 10px;
   height: 120px;
+  max-width: calc(100vw - 80px);
 }
 
 /* ============================================================
@@ -75,6 +84,9 @@ body {
   -webkit-tap-highlight-color: transparent;
   transition: background 0.3s ease;
   isolation: isolate;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
 .hamburger span {
@@ -103,11 +115,10 @@ body {
    OVERLAY MENU
    ============================================================ */
 .menu-overlay {
-    -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 260px;
+  top: 0; right: 0;
+  width: min(260px, 80vw);
   height: 100%;
   background: #1a1a1a;
   display: flex;
@@ -125,29 +136,22 @@ body {
 }
 
 .menu-link {
-  color: #eee;
+  color: rgba(238,238,238,0.7);
   text-decoration: none;
-  font-size: 1.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   padding: 18px 30px;
-  transition: background 0.2s ease, letter-spacing 0.2s ease;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s ease, color 0.2s ease, letter-spacing 0.2s ease;
 }
 
-.menu-link:hover        { background: #2a2a2a; letter-spacing: 2px; }
-.menu-link.active       { color: #fff; letter-spacing: 3px; }
+.menu-link:hover        { background: #2a2a2a; color: #fff; letter-spacing: 0.18em; }
+.menu-link.active       { color: #fff; }
 
-.close-btn {
-  position: absolute;
-  top: 30px; right: 30px;
-  font-size: 32px;
-  color: #eee;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-  display: none; /* hamburger handles closing now */
-}
-
-/* ============================================================
-   DIM OVERLAY
-   ============================================================ */
 #menuDim {
   display: none;
   position: fixed;
@@ -155,7 +159,6 @@ body {
   background: rgba(0, 0, 0, 0.5);
   z-index: 2140;
 }
-
 #menuDim.active { display: block; }
 
 /* ============================================================
@@ -176,7 +179,8 @@ body {
   overflow: hidden;
   border-radius: 2px;
   cursor: default;
-  height: 500px;
+  aspect-ratio: 4/3;
+  background: #111;
 }
 
 .gallery-item img.day,
@@ -198,6 +202,25 @@ body {
 .gallery-item:hover img.day   { opacity: 0; transform: scale(1.05); }
 .gallery-item:hover img.night { opacity: 1; transform: scale(1.05); }
 
+/* Tap hint (mobile) */
+.tap-hint {
+  position: absolute;
+  bottom: 16px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.6);
+  color: rgba(255,255,255,0.85);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 100px;
+  white-space: nowrap;
+  z-index: 4;
+  animation: fadeIn 0.5s 1s ease both, fadeOut 0.5s 4s ease forwards;
+  pointer-events: none;
+}
+@keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+@keyframes fadeOut { to{opacity:0} }
+
 /* ============================================================
    LIGHTBOX
    ============================================================ */
@@ -210,39 +233,42 @@ body {
   align-items: center;
   z-index: 5000;
   cursor: zoom-out;
+  padding: 20px;
 }
 
 .lightbox img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 12px;
-  cursor: default;
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 4px;
+  object-fit: contain;
 }
 
 /* ============================================================
    STANOVI BUTTON
    ============================================================ */
 #pageWrapper {
-    -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 20px 16px;
 }
 
 .btn-apartments {
   display: inline-block;
-  margin: 80px auto;
+  margin: 60px auto;
   font-family: 'Playfair Display', serif;
   font-weight: 500;
-  font-size: 25px;
-  letter-spacing: 4px;
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 22px 70px;
+  padding: clamp(14px, 3vw, 22px) clamp(36px, 8vw, 70px);
   background: rgb(0, 107, 93);
   color: #ffffff;
-  transition: all 0.4s ease;
+  transition: background 0.4s ease, color 0.4s ease, transform 0.3s ease;
+  border: 2px solid rgb(0, 107, 93);
 }
 
 .btn-apartments:hover {
@@ -255,11 +281,12 @@ body {
    FLOOR SELECTOR MODAL
    ============================================================ */
 .modal {
-    -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -267,6 +294,7 @@ body {
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 4000;
+  padding: 20px;
 }
 
 .modal.active {
@@ -276,30 +304,33 @@ body {
 
 .modal-content {
   background: #f5f1eb;
-  padding: 80px 70px;
-  width: 500px;
-  max-width: 90%;
+  padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 70px);
+  width: min(500px, 100%);
   box-shadow: 0 60px 140px rgba(0, 0, 0, 0.25);
   transform: translateY(40px);
   transition: transform 0.5s ease;
   position: relative;
+  border-radius: 4px;
 }
 
 .modal.active .modal-content { transform: translateY(0); }
 
 .close-modal {
   position: absolute;
-  top: 20px; right: 30px;
+  top: 16px; right: 24px;
   font-size: 28px;
   cursor: pointer;
   color: #2b2b2b;
+  line-height: 1;
+  padding: 8px;
+  transition: opacity 0.2s;
 }
+.close-modal:hover { opacity: 0.6; }
 
 /* ============================================================
    FLOOR LIST
    ============================================================ */
 .floor-list {
-  
   list-style: none;
   margin-top: 20px;
   padding: 0;
@@ -307,17 +338,23 @@ body {
 }
 
 .floor-list li {
-  padding: 18px 0;
+  padding: 18px 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  font-size: 16px;
-  letter-spacing: 2px;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
   transition: padding-left 0.3s ease, color 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 56px;
 }
 
-.floor-list li:hover  { padding-left: 15px; color: #000; }
-.floor-list li:active { transform: scale(0.98); }
+.floor-list li:last-child { border-bottom: none; }
+.floor-list li:hover  { padding-left: 15px; color: #006b5d; }
+.floor-list li:active { opacity: 0.7; }
+.floor-num { font-size: 0.75rem; color: #999; font-weight: 600; }
 
 /* ============================================================
    CONTACT INFO
@@ -326,20 +363,22 @@ body {
   text-align: center;
   padding: 60px 10%;
   color: #666;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.04);
+  line-height: 2;
 }
 
 .contact-info a {
   color: #006b5d;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
+  transition: opacity 0.2s;
 }
+.contact-info a:hover { opacity: 0.75; }
 
 /* ============================================================
    APARTMENTS PAGE
    ============================================================ */
 .apartments-page {
-  
   max-width: 1200px;
   margin: 0 auto;
   padding: 120px 5% 60px;
@@ -354,26 +393,31 @@ body {
   padding: 40px;
   background: #fffaf5;
   border-radius: 12px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px;
+  /* min-width: 0 prevents the flex/grid child from overflowing its container */
+  min-width: 0;
+  overflow: hidden; /* clip any horizontal gallery overflow from leaking to page */
 }
 
 .apartments-page .floor:hover {
   transform: translateY(-4px);
-  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 35px 80px rgba(0, 0, 0, 0.12);
 }
 
 .apartments-page .floor h2 {
   font-family: 'Playfair Display', serif;
   font-weight: 700;
-  font-size: 2rem;
+  font-size: clamp(1.4rem, 3vw, 2rem);
   margin-bottom: 20px;
   color: #006b5d;
   letter-spacing: 1px;
 }
 
 .apartments-page .floor p {
-  font-size: 1rem;
+  font-size: 0.95rem;
   margin-bottom: 16px;
   color: #3a3a3a;
 }
@@ -386,11 +430,15 @@ body {
   padding-bottom: 12px;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,107,93,0.3) transparent;
 }
+.floor-gallery.mobile-scroll::-webkit-scrollbar { height: 4px; }
+.floor-gallery.mobile-scroll::-webkit-scrollbar-thumb { background: rgba(0,107,93,0.3); border-radius: 4px; }
 
 .floor-gallery.mobile-scroll img {
   flex: 0 0 auto;
-  width: 320px;
+  width: clamp(220px, 35vw, 320px);
   height: 220px;
   object-fit: cover;
   border-radius: 10px;
@@ -407,49 +455,44 @@ body {
 :target { scroll-margin-top: 110px; }
 
 /* ============================================================
+   FOCUS / ACCESSIBILITY
+   ============================================================ */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid #006b5d;
+  outline-offset: 3px;
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 768px) {
 
-  /* Gallery */
   .gallery {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
-  .gallery-item { height: 300px; }
+  .gallery-item { aspect-ratio: 16/10; }
 
-  /* Modal slides up from bottom */
-  .modal { align-items: flex-end; }
-
+  /* Modal slides up from bottom on mobile */
+  .modal { align-items: flex-end; padding: 0; }
   .modal-content {
     width: 100%;
-    max-width: 100%;
-    border-radius: 12px 12px 0 0;
-    padding: 50px 30px;
+    border-radius: 16px 16px 0 0;
+    padding: 40px 24px 32px;
     transform: translateY(100%);
     transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
-
   .modal.active .modal-content { transform: translateY(0); }
 
-  /* Apartments page */
   .apartments-page { padding: 100px 4% 40px; }
+  .apartments-page .floor { padding: 24px 20px; margin-bottom: 32px; }
+  .floor-gallery.mobile-scroll img { height: 180px; }
+}
 
-  .apartments-page .floor {
-    padding: 24px;
-    margin-bottom: 40px;
-  }
-
-  .apartments-page .floor h2 { font-size: 1.5rem; }
-
-  .floor-gallery.mobile-scroll img {
-    width: 80vw;
-    height: 180px;
-  }
-
-  /* Button */
-  .btn-apartments {
-    font-size: 18px;
-    padding: 18px 48px;
-    letter-spacing: 3px;
-  }
+@media (max-width: 480px) {
+  .header { height: 70px; }
+  .logo img { height: 140px; padding-top: 20px; max-width: calc(100vw - 70px); }
+  .header.scrolled .logo img { height: 90px; padding-top: 8px; max-width: calc(100vw - 70px); }
+  .gallery { padding: 12px 4%; margin-top: 70px; }
+  .contact-info { padding: 40px 6%; }
 }

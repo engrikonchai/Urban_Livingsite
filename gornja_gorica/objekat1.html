@@ -2,8 +2,11 @@
 <html lang="me">
 <head>
   <meta charset="UTF-8">
+  <meta name="description" content="Objekat 1, Upper Gorica — Urban Living Podgorica.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Objekat 1 — Urban Living</title>
+  <title>Objekat 1 — Upper Gorica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
@@ -326,7 +329,7 @@
   <!-- BUILDING HERO IMAGE -->
   <div class="building-hero">
     <!-- Replace B1.jpg with your actual Building 1 image -->
-    <img src="images\PESIC PARKETI\1_zgrada\PESIC PARKETI-09.png" alt="Objekat 1">
+    <img loading="lazy" decoding="async" src="images\PESIC PARKETI\1_zgrada\PESIC PARKETI-09.png" alt="Objekat 1">
     <div class="building-hero-label">
       <span class="b-num">01</span>
       <span class="b-name">Objekat 1</span>
@@ -357,9 +360,9 @@
       <div class="floor-gallery mobile-scroll">
         <!--
           ADD YOUR IMAGES HERE
-          Example: <img src="images/B1_Podrum_1.jpg" alt="Podrum">
+          Example: <img loading="lazy" decoding="async" src="images/B1_Podrum_1.jpg" alt="Podrum">
         -->
-        <img src="images/PESIC PARKETI/1_zgrada/Podrum.png" alt="Podrum — Objekat 1">
+        <img loading="lazy" decoding="async" src="images/PESIC PARKETI/1_zgrada/Podrum.png" alt="Podrum — Objekat 1">
       </div>
     </section>
 
@@ -375,9 +378,9 @@
       <div class="floor-gallery mobile-scroll">
         <!--
           ADD YOUR IMAGES HERE
-          Example: <img src="images/B1_Prizemlje_1.jpg" alt="Prizemlje">
+          Example: <img loading="lazy" decoding="async" src="images/B1_Prizemlje_1.jpg" alt="Prizemlje">
         -->
-        <img src="images/PESIC PARKETI/1_zgrada/prizemlje.png" alt="Prizemlje — Objekat 1">
+        <img loading="lazy" decoding="async" src="images/PESIC PARKETI/1_zgrada/prizemlje.png" alt="Prizemlje — Objekat 1">
       </div>
     </section>
 
@@ -393,9 +396,9 @@
       <div class="floor-gallery mobile-scroll">
         <!--
           ADD YOUR IMAGES HERE
-          Example: <img src="images/B1_1Sprat_1.jpg" alt="1 Sprat">
+          Example: <img loading="lazy" decoding="async" src="images/B1_1Sprat_1.jpg" alt="1 Sprat">
         -->
-        <img src="images/PESIC PARKETI/1_zgrada/prvi_sprat.png" alt="1 Sprat — Objekat 1">
+        <img loading="lazy" decoding="async" src="images/PESIC PARKETI/1_zgrada/prvi_sprat.png" alt="1 Sprat — Objekat 1">
       </div>
     </section>
 
@@ -411,9 +414,9 @@
       <div class="floor-gallery mobile-scroll">
         <!--
           ADD YOUR IMAGES HERE
-          Example: <img src="images/B1_2Sprat_1.jpg" alt="2 Sprat">
+          Example: <img loading="lazy" decoding="async" src="images/B1_2Sprat_1.jpg" alt="2 Sprat">
         -->
-        <img src="images/PESIC PARKETI/1_zgrada/drugi_sprat.png" alt="2 Sprat — Objekat 1">
+        <img loading="lazy" decoding="async" src="images/PESIC PARKETI/1_zgrada/drugi_sprat.png" alt="2 Sprat — Objekat 1">
       </div>
     </section>
 
@@ -429,9 +432,9 @@
       <div class="floor-gallery mobile-scroll">
         <!--
           ADD YOUR IMAGES HERE
-          Example: <img src="images/B1_Podkrovlje_1.jpg" alt="Podkrovlje">
+          Example: <img loading="lazy" decoding="async" src="images/B1_Podkrovlje_1.jpg" alt="Podkrovlje">
         -->
-        <img src="images/PESIC PARKETI/1_zgrada/podkrovlje.png" alt="Podkrovlje — Objekat 1">
+        <img loading="lazy" decoding="async" src="images/PESIC PARKETI/1_zgrada/podkrovlje.png" alt="Podkrovlje — Objekat 1">
       </div>
     </section>
 
@@ -452,7 +455,7 @@
         const lb = document.createElement('div');
         lb.className = 'lightbox';
         lb.innerHTML = `
-          <img src="${img.src}" alt="${img.alt}">
+          <img loading="lazy" decoding="async" src="${img.src}" alt="${img.alt}">
           <span class="lightbox-hint">Kliknite bilo gdje za zatvaranje</span>
         `;
         document.body.appendChild(lb);
