@@ -9,7 +9,7 @@
   opacity: 0; transition: opacity 1.5s ease-in-out;
   will-change: opacity;
 }
-.building-hero-triple img.active { opacity: 0.7; z-index: 1; }
+.building-hero-triple img.active { opacity: 1; z-index: 1; }
 
 .hero-dots {
   position: absolute; bottom: 24px; right: 6%;
@@ -95,22 +95,47 @@
   transform: scale(1.02); box-shadow: 0 15px 40px rgba(0,0,0,0.15);
 }
 
-/* ── LIGHTBOX ── */
+/* ── HIGH-RESOLUTION MAP LIGHTBOX ── */
 .lightbox {
   position: fixed; inset: 0; background: rgba(10,10,10,0.98);
   display: flex; justify-content: center; align-items: center;
-  z-index: 99999; cursor: zoom-out; padding: 20px;
-  opacity: 0; transition: opacity 0.3s ease;
+  z-index: 99999; opacity: 0; transition: opacity 0.3s ease;
 }
-.lightbox img {
-  max-width: 100%; max-height: 90vh; border-radius: 4px;
-  box-shadow: 0 20px 80px #000; object-fit: contain;
+
+.lb-scroll-container {
+  width: 100%; height: 100%;
+  display: flex; justify-content: center; align-items: center;
+  overflow: auto; /* Enables the 'Map' panning */
+  padding: 20px;
+  cursor: grab;
 }
+
+.lb-scroll-container:active { cursor: grabbing; }
+
+.lb-target-img {
+  max-width: 95%; max-height: 90vh;
+  border-radius: 4px; box-shadow: 0 20px 80px #000;
+  object-fit: contain; cursor: zoom-in;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: white; /* Contrast for technical drawings */
+}
+
+/* ZOOMED STATE: Uses massive width to force detail visibility */
+.lb-target-img.is-zoomed {
+  max-width: none;
+  width: 3500px; /* Forces high-res rendering */
+  max-height: none;
+  cursor: zoom-out;
+}
+
 .lightbox-hint {
-  position: absolute; bottom: 24px;
-  color: rgba(255,255,255,0.4); font-size: 0.65rem;
-  text-transform: uppercase; letter-spacing: 0.1em;
-  font-family: 'Quicksand', sans-serif;
+  position: absolute; bottom: 24px; left: 50%;
+  transform: translateX(-50%);
+  color: #fff; font-size: 0.7rem; text-transform: uppercase; 
+  letter-spacing: 0.1em; font-family: 'Quicksand', sans-serif;
+  pointer-events: none; background: rgba(0,0,0,0.6);
+  padding: 10px 20px; border-radius: 50px;
+  backdrop-filter: blur(5px);
 }
 
 @keyframes fadeUp {
