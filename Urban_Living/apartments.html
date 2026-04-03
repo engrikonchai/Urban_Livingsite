@@ -454,30 +454,75 @@ document.querySelectorAll('.floor-gallery img').forEach(img => {
   });
 });
 
-    // ── STICKY NAV — highlight closest floor only ──
+// ── STICKY NAV — highlight closest floor only ──
     const navLinks      = document.querySelectorAll('.floor-nav a');
     const floorSections = document.querySelectorAll('.floor');
     const floorNav      = document.getElementById('floorNav');
 
+    let currentActiveFloor = null;
+
     function updateActiveNav() {
       const offset = (document.querySelector('.header')?.offsetHeight || 90)
                    + (floorNav?.offsetHeight || 48) + 10;
+      
       let best = null, bestDist = Infinity;
+      
       floorSections.forEach(s => {
         const dist = Math.abs(s.getBoundingClientRect().top - offset);
         if (dist < bestDist) { bestDist = dist; best = s; }
       });
-      if (best) {
+      
+      if (best && currentActiveFloor !== best.id) {
+        currentActiveFloor = best.id;
+        
+        // Remove active class from all
         navLinks.forEach(a => a.classList.remove('active'));
-        const a = document.querySelector(`.floor-nav a[href="#${best.id}"]`);
-        if (a) {
-          a.classList.add('active');
-          a.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        
+        // Add active class to current
+        const activeLink = document.querySelector(`.floor-nav a[href="#${best.id}"]`);
+        
+        if (activeLink) {
+          activeLink.classList.add('active');
+          
+          // SCROLL FIX: Calculate exact horizontal center and scroll ONLY the container
+          const linkCenter = activeLink.offsetLeft + (activeLink.offsetWidth / 2);
+          const navCenter = floorNav.offsetWidth / 2;
+          
+          floorNav.scrollTo({ 
+            left: linkCenter - navCenter, 
+            behavior: 'smooth' 
+          });
         }
       }
     }
+    
     window.addEventListener('scroll', updateActiveNav, { passive: true });
     updateActiveNav();
+
+    // ── SMOOTH SCROLL ON CLICK ──
+    // This stops the browser from doing an "instant jump" and fighting the scroll listener
+    navLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault(); 
+        const targetId = this.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+          const headerHeight = (document.querySelector('.header')?.offsetHeight || 90) 
+                             + (floorNav?.offsetHeight || 48);
+          
+          const targetPosition = targetSection.getBoundingClientRect().top + window.scrollY - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+        
+        // Update URL hash without jumping
+        history.pushState(null, null, targetId);
+      });
+    });
 
     // ── DRAG TO SCROLL (desktop) ──
     document.querySelectorAll('.floor-gallery.mobile-scroll').forEach(g => {
