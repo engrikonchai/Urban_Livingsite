@@ -109,7 +109,7 @@
       padding: 12px 6%; display: flex; gap: 8px;
       overflow-x: auto; scrollbar-width: none;
       border-bottom: 1px solid rgba(0,0,0,.06);
-      margin-top: 90px; /* push below fixed header */
+      margin-top: 90px;
       animation: fadeUp .8s .15s ease both;
     }
     .floor-nav::-webkit-scrollbar { display: none; }
@@ -215,6 +215,56 @@
       box-shadow: 0 20px 50px rgba(0,0,0,.18) !important;
     }
 
+    /* ── SOLD RIBBON ── */
+    .img-wrap {
+      position: relative;
+      flex: 0 0 auto;
+      display: inline-block;
+      scroll-snap-align: start;
+    }
+    .img-wrap img {
+      display: block;
+      filter: brightness(0.78) saturate(0.6) !important;
+    }
+    .img-wrap img:hover {
+      transform: scale(1.02) !important;
+      filter: brightness(0.82) saturate(0.65) !important;
+      box-shadow: 0 20px 50px rgba(0,0,0,.18) !important;
+    }
+    .sold-ribbon {
+      position: absolute;
+      top: 30px;
+      left: -40px;
+      width: 170px;
+      padding: 9px 0;
+      text-align: center;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      background: #006b5d;
+      color: #fff;
+      transform: rotate(-45deg);
+      z-index: 20;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
+
+    /* Fix first-child sizing when inside img-wrap */
+    .floor-gallery.mobile-scroll .img-wrap:first-child img {
+      width: clamp(300px, 45vw, 560px) !important;
+      height: 340px !important;
+    }
+    .floor-gallery.mobile-scroll .img-wrap img {
+      width: clamp(260px, 38vw, 480px) !important;
+      height: 300px !important;
+      object-fit: cover !important;
+      border-radius: 4px !important;
+      cursor: pointer;
+      transition: transform .4s ease, filter .4s ease, box-shadow .4s ease !important;
+    }
+
     /* ── LIGHTBOX ── */
     .lightbox {
       position: fixed; inset: 0;
@@ -229,6 +279,7 @@
       border-radius: 4px; box-shadow: 0 40px 100px rgba(0,0,0,.6);
       cursor: default;
       animation: lbImgIn .35s cubic-bezier(.22,1,.36,1);
+      filter: none !important;
     }
     @keyframes lbImgIn {
       from { opacity:0; transform: scale(.94); }
@@ -274,6 +325,8 @@
       .floor-meta { margin-left: 0; margin-top: 8px; }
       .floor-gallery.mobile-scroll img { width: 78vw !important; height: 220px !important; }
       .floor-gallery.mobile-scroll img:first-child { width: 85vw !important; height: 250px !important; }
+      .floor-gallery.mobile-scroll .img-wrap img { width: 78vw !important; height: 220px !important; }
+      .floor-gallery.mobile-scroll .img-wrap:first-child img { width: 85vw !important; height: 250px !important; }
       .floor-gallery.mobile-scroll img:hover { transform: none !important; filter: none !important; box-shadow: none !important; }
       .floor-gallery.mobile-scroll img:active { transform: scale(.97) !important; transition: transform .15s ease !important; }
       .contact-info { padding: 50px 5% !important; }
@@ -328,6 +381,7 @@
       </div>
     </section>
 
+    <!-- PRVI SPRAT — PRODATO -->
     <section class="floor" id="floor2">
       <div class="floor-header">
         <span class="floor-number">01</span>
@@ -337,14 +391,30 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img loading="lazy" decoding="async" src="images/Grupno1.jpg" alt="Raspored sprata">
-        <img loading="lazy" decoding="async" src="images/S1A1.jpg"    alt="Stan 1A">
-        <img loading="lazy" decoding="async" src="images/S1A2.jpg"    alt="Stan 1B">
-        <img loading="lazy" decoding="async" src="images/S1A3.jpg"    alt="Stan 1C">
-        <img loading="lazy" decoding="async" src="images/S1A4.jpg"    alt="Stan 1D">
+        <div class="img-wrap">
+          <div class="sold-ribbon">Prodato</div>
+          <img loading="lazy" decoding="async" src="images/Grupno1.jpg" alt="Raspored sprata">
+        </div>
+        <div class="img-wrap">
+          <div class="sold-ribbon">Prodato</div>
+          <img loading="lazy" decoding="async" src="images/S1A1.jpg" alt="Stan 1A">
+        </div>
+        <div class="img-wrap">
+          <div class="sold-ribbon">Prodato</div>
+          <img loading="lazy" decoding="async" src="images/S1A2.jpg" alt="Stan 1B">
+        </div>
+        <div class="img-wrap">
+          <div class="sold-ribbon">Prodato</div>
+          <img loading="lazy" decoding="async" src="images/S1A3.jpg" alt="Stan 1C">
+        </div>
+        <div class="img-wrap">
+          <div class="sold-ribbon">Prodato</div>
+          <img loading="lazy" decoding="async" src="images/S1A4.jpg" alt="Stan 1D">
+        </div>
       </div>
     </section>
 
+    <!-- DRUGI SPRAT — PRODATO -->
     <section class="floor" id="floor3">
       <div class="floor-header">
         <span class="floor-number">02</span>
@@ -354,11 +424,26 @@
         </div>
       </div>
       <div class="floor-gallery mobile-scroll">
-        <img loading="lazy" decoding="async" src="images/Grupno2.jpg" alt="Raspored sprata">
-        <img loading="lazy" decoding="async" src="images/S2A1.jpg"    alt="Stan 2A">
-        <img loading="lazy" decoding="async" src="images/S2A2.jpg"    alt="Stan 2B">
-        <img loading="lazy" decoding="async" src="images/S2A3.jpg"    alt="Stan 2C">
-        <img loading="lazy" decoding="async" src="images/S2A4.jpg"    alt="Stan 2D">
+        <div class="img-wrap">
+          <div class="sold-ribbon">Prodato</div>
+          <img loading="lazy" decoding="async" src="images/Grupno2.jpg" alt="Raspored sprata">
+        </div>
+        <div class="img-wrap">
+          <div class="sold-ribbon">Prodato</div>
+          <img loading="lazy" decoding="async" src="images/S2A1.jpg" alt="Stan 2A">
+        </div>
+        <div class="img-wrap">
+          <div class="sold-ribbon">Prodato</div>
+          <img loading="lazy" decoding="async" src="images/S2A2.jpg" alt="Stan 2B">
+        </div>
+        <div class="img-wrap">
+          <div class="sold-ribbon">Prodato</div>
+          <img loading="lazy" decoding="async" src="images/S2A3.jpg" alt="Stan 2C">
+        </div>
+        <div class="img-wrap">
+          <div class="sold-ribbon">Prodato</div>
+          <img loading="lazy" decoding="async" src="images/S2A4.jpg" alt="Stan 2D">
+        </div>
       </div>
     </section>
 
@@ -412,20 +497,17 @@
   </main>
 
   <section id="contactInfo" class="contact-info">
-    <p>Email: <a href="mailto:urbanlivingmontenegro@gmail.com">urbanlivingmontenegro@gmail.com</a></p>
+    <p>Email: <a href="/cdn-cgi/l/email-protection#2a5f58484b4446435c43444d4745445e4f444f4d58456a4d474b434604494547"><span class="__cf_email__" data-cfemail="a4d1d6c6c5cac8cdd2cdcac3c9cbcad0c1cac1c3d6cbe4c3c9c5cdc88ac7cbc9">[email&#160;protected]</span></a></p>
         <div class="cd-value"><a href="tel:+38267722424">+382 67 722 424</a></div>
         <div class="cd-value"><a href="tel:+38267165699">+382 67 165 669</a></div>
   </section>
 
-
-
-  <script src="script.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
   <script>
 
     // ── LIGHTBOX ──
 document.querySelectorAll('.floor-gallery img').forEach(img => {
   img.addEventListener('click', () => {
-    // Create lightbox
     const lb = document.createElement('div');
     lb.className = 'lightbox';
     lb.innerHTML = `
@@ -434,23 +516,14 @@ document.querySelectorAll('.floor-gallery img').forEach(img => {
     `;
     document.body.appendChild(lb);
 
-    // Disable page scroll
     document.body.style.overflow = 'hidden';
 
-    // Function to close lightbox
     const close = () => {
       document.body.removeChild(lb);
-      document.body.style.overflow = ''; // restore scroll
+      document.body.style.overflow = '';
     };
 
-    // Close lightbox when clicking anywhere
     lb.addEventListener('click', close);
-
-    // Close lightbox when clicking the close button
-    lb.querySelector('.lightbox-close').addEventListener('click', e => {
-      e.stopPropagation(); // prevent outer click from firing
-      close();
-    });
   });
 });
 
@@ -475,16 +548,13 @@ document.querySelectorAll('.floor-gallery img').forEach(img => {
       if (best && currentActiveFloor !== best.id) {
         currentActiveFloor = best.id;
         
-        // Remove active class from all
         navLinks.forEach(a => a.classList.remove('active'));
         
-        // Add active class to current
         const activeLink = document.querySelector(`.floor-nav a[href="#${best.id}"]`);
         
         if (activeLink) {
           activeLink.classList.add('active');
           
-          // SCROLL FIX: Calculate exact horizontal center and scroll ONLY the container
           const linkCenter = activeLink.offsetLeft + (activeLink.offsetWidth / 2);
           const navCenter = floorNav.offsetWidth / 2;
           
@@ -500,7 +570,6 @@ document.querySelectorAll('.floor-gallery img').forEach(img => {
     updateActiveNav();
 
     // ── SMOOTH SCROLL ON CLICK ──
-    // This stops the browser from doing an "instant jump" and fighting the scroll listener
     navLinks.forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault(); 
@@ -519,7 +588,6 @@ document.querySelectorAll('.floor-gallery img').forEach(img => {
           });
         }
         
-        // Update URL hash without jumping
         history.pushState(null, null, targetId);
       });
     });
@@ -544,11 +612,3 @@ document.querySelectorAll('.floor-gallery img').forEach(img => {
         if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 200);
     }
-
-    // ── KEYBOARD for hamburger ──
-    document.getElementById('hamburger').addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); document.getElementById('hamburger').click(); }
-    });
-  </script>
-</body>
-</html>
