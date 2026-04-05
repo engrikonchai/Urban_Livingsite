@@ -29,11 +29,20 @@ function toggle(open) {
   document.body.style.overflow = open ? 'hidden' : '';
 }
 
-hb.addEventListener('click', () => toggle(!mm.classList.contains('active')));
-md.addEventListener('click', () => toggle(false));
-mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+hb.addEventListener('click', function() {
+  toggle(!mm.classList.contains('active'));
+});
 
-// Close on Escape
-document.addEventListener('keydown', e => {
+md.addEventListener('click', function() {
+  toggle(false);
+});
+
+mm.querySelectorAll('a').forEach(function(a) {
+  a.addEventListener('click', function() {
+    toggle(false);
+  });
+});
+
+document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && mm.classList.contains('active')) toggle(false);
 });

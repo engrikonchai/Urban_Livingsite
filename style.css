@@ -147,7 +147,7 @@ nav#nav.scrolled .nav-link:hover { color: var(--green); }
 .sec-title {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 400; line-height: 1.2; color: var(--charcoal);
+  font-weight: 400; line-height: 1.2; color: var(--dark);
 }
 .sec-title em { font-style: italic; color: var(--green); }
 
@@ -265,10 +265,11 @@ footer {
 /* ── HAMBURGER / MOBILE MENU ── */
 .hamburger {
   display: none; position: fixed; right: 18px; top: 18px;
-  width: 48px; height: 48px; z-index: 9000;
+  width: 48px; height: 48px; z-index: 9100;
   flex-direction: column; justify-content: center; align-items: center; gap: 5px;
   cursor: pointer; -webkit-tap-highlight-color: transparent;
-  border-radius: 50%; background: none; border: none; padding: 0;
+  border-radius: 50%; background: rgba(26,26,24,0.5); border: none; padding: 0;
+  touch-action: manipulation;
 }
 .hamburger span {
   display: block; height: 2px; border-radius: 2px; background: var(--cream);
@@ -298,14 +299,47 @@ footer {
 }
 .mob-menu.active::after { height: 100%; }
 .mob-menu a {
-  padding: 18px 32px; color: rgba(255,255,255,0.5);
+  padding: 18px 32px; color: rgba(255,255,255,0.7);
   font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase;
-  font-weight: 600; text-decoration: none; transition: color 0.3s; opacity: 0;
+  font-weight: 600; text-decoration: none;
   min-height: 56px; display: flex; align-items: center;
+  transition: color 0.3s;
 }
-.mob-menu.active a { animation: mobSlide 0.4s ease forwards; }
-.mob-menu.active a:nth-child(1) { animation-delay: 0.06s; }
-.mob-menu.active a:nth-child(2) { animation-delay: 0.13s; }
+.mob-menu a:hover { color: #fff; }
+
+/* ── ALTERNATE SECTION BG ── */
+.projects-slide--alt {
+  background: #eae5dd;
+}
+
+/* ── PLACEHOLDER CARDS ── */
+.projects-grid--placeholder {
+  grid-template-columns: 1fr;
+}
+.project-placeholder {
+  border: 2px dashed rgba(0,107,93,0.25);
+  border-radius: 4px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.placeholder-inner {
+  text-align: center;
+  color: var(--mid);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.placeholder-icon { font-size: 2.2rem; }
+.placeholder-inner p {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--mid);
+}
 .mob-menu a:hover { color: #fff; }
 @keyframes mobSlide { from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:translateX(0)} }
 

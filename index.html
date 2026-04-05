@@ -23,8 +23,10 @@
 <nav id="nav" role="navigation" aria-label="Glavna navigacija">
   <a href="#hero" class="nav-logo">Urban<span> Living</span></a>
   <div class="nav-links">
-    <a href="#projects" class="nav-link">Projekti</a>
-    <a href="#contact"  class="nav-link">Kontakt</a>
+    <a href="#u-prodaji"   class="nav-link">U Prodaji</a>
+    <a href="#u-izgradnji" class="nav-link">U Izgradnji</a>
+    <a href="#u-najavi"    class="nav-link">U Najavi</a>
+    <a href="#contact"     class="nav-link">Kontakt</a>
   </div>
 </nav>
 
@@ -33,7 +35,9 @@
   <span></span><span></span><span></span>
 </button>
 <nav class="mob-menu" id="mobMenu" aria-label="Mobilna navigacija">
-  <a href="#projects">Projekti</a>
+  <a href="#u-prodaji">U Prodaji</a>
+  <a href="#u-izgradnji">U Izgradnji</a>
+  <a href="#u-najavi">U Najavi</a>
   <a href="#contact">Kontakt</a>
 </nav>
 <div class="mob-dim" id="mobDim" aria-hidden="true"></div>
@@ -47,14 +51,14 @@
   </div>
 </section>
 
-<!-- PROJEKTI -->
-<section class="projects-slide" id="projects" aria-label="Naši projekti">
+<!-- PROJEKTI U PRODAJI -->
+<section class="projects-slide" id="u-prodaji" aria-label="Projekti u prodaji">
   <div class="section-head">
     <div>
-      <div class="label">Naši Projekti</div>
+      <div class="label">Projekti u Prodaji</div>
+      <h2 class="sec-title">Dostupni <em>Odmah</em></h2>
     </div>
   </div>
-
   <div class="projects-grid">
 
     <a href="Urban_Living/index.html" class="project-card-link" aria-label="Zeta Rezident projekat">
@@ -90,6 +94,42 @@
   </div>
 </section>
 
+<!-- PROJEKTI U IZGRADNJI -->
+<section class="projects-slide projects-slide--alt" id="u-izgradnji" aria-label="Projekti u izgradnji">
+  <div class="section-head">
+    <div>
+      <div class="label">Projekti u Izgradnji</div>
+      <h2 class="sec-title">U <em>Izgradnji</em></h2>
+    </div>
+  </div>
+  <div class="projects-grid projects-grid--placeholder">
+    <div class="project-placeholder">
+      <div class="placeholder-inner">
+        <span class="placeholder-icon">🏗️</span>
+        <p>Projekti u izgradnji uskoro</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJEKTI U NAJAVI -->
+<section class="projects-slide" id="u-najavi" aria-label="Projekti u najavi">
+  <div class="section-head">
+    <div>
+      <div class="label">Projekti u Najavi</div>
+      <h2 class="sec-title">Dolazi <em>Uskoro</em></h2>
+    </div>
+  </div>
+  <div class="projects-grid projects-grid--placeholder">
+    <div class="project-placeholder">
+      <div class="placeholder-inner">
+        <span class="placeholder-icon">📋</span>
+        <p>Novi projekti uskoro u najavi</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- KONTAKT -->
 <section class="contact-slide" id="contact" aria-label="Kontakt informacije">
   <div class="label">Kontakt</div>
@@ -110,7 +150,7 @@
       <div class="cd-icon" aria-hidden="true">✉️</div>
       <div>
         <div class="cd-label">Email</div>
-        <div class="cd-value"><a href="mailto:urbanlivingmontenegro@gmail.com">urbanlivingmontenegro@gmail.com</a></div>
+        <div class="cd-value"><a href="/cdn-cgi/l/email-protection#5a2f28383b3436332c33343d3735342e3f343f3d28351a3d373b333674393537"><span class="__cf_email__" data-cfemail="2a5f58484b4446435c43444d4745445e4f444f4d58456a4d474b434604494547">[email&#160;protected]</span></a></div>
       </div>
     </div>
 
@@ -120,10 +160,46 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Urban<span> Living</span></div>
+  
   <div class="footer-copy">© 2026 Urban Living d.o.o. · Podgorica, Crna Gora</div>
   <div class="footer-social"></div>
 </footer>
 
-<script src="script.js"></script>
+<script>
+// NAV SCROLL
+var nav = document.getElementById('nav');
+var hb  = document.getElementById('hamburger');
+window.addEventListener('scroll', function() {
+  var scrolled = window.scrollY > 60;
+  nav.classList.toggle('scrolled', scrolled);
+  hb.classList.toggle('onlight', scrolled);
+}, { passive: true });
+
+// HAMBURGER MENU
+var mm = document.getElementById('mobMenu');
+var md = document.getElementById('mobDim');
+
+function menuToggle(open) {
+  hb.classList.toggle('active', open);
+  hb.setAttribute('aria-expanded', String(open));
+  mm.classList.toggle('active', open);
+  md.classList.toggle('active', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+hb.onclick = function() {
+  menuToggle(!mm.classList.contains('active'));
+};
+md.onclick = function() { menuToggle(false); };
+
+var links = mm.querySelectorAll('a');
+for (var i = 0; i < links.length; i++) {
+  links[i].onclick = function() { menuToggle(false); };
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') menuToggle(false);
+});
+</script>
 </body>
 </html>
