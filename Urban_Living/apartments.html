@@ -18,6 +18,41 @@
       --muted: #999;
     }
 
+    /* ═══════════════════════════════════════════
+       BACK BUTTON (added - same as all other pages)
+    ═══════════════════════════════════════════ */
+    .back-btn {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #2b2b2b;
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeUp 0.6s 1.9s ease forwards;
+      transition: color 0.3s;
+    }
+    .back-btn::before {
+      content: '←';
+      font-size: 0.9rem;
+      transition: transform 0.3s;
+    }
+    .back-btn:hover { color: #006b5d; }
+    .back-btn:hover::before { transform: translateX(-4px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     /* ── HAMBURGER ── */
     .close-btn { display: none !important; }
 
@@ -336,6 +371,9 @@
 </head>
 <body id="apartments">
 
+  <!-- BACK BUTTON -->
+  <a href="../index.html" class="back-btn">Nazad</a>
+
 <!-- HEADER -->
 <header class="header">
 <span class="logo">
@@ -502,32 +540,34 @@
         <div class="cd-value"><a href="tel:+38267165699">+382 67 165 669</a></div>
   </section>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="script.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="script.js"></script>
   <script>
+    // ── CLEAN & WORKING LIGHTBOX ──
+    document.querySelectorAll('.floor-gallery img').forEach(img => {
+      img.addEventListener('click', () => {
+        const lb = document.createElement('div');
+        lb.className = 'lightbox';
+        lb.innerHTML = `
+          <img loading="lazy" decoding="async" src="${img.src}" alt="${img.alt}">
+          <span class="lightbox-hint">Kliknite bilo gdje za zatvaranje</span>
+        `;
+        document.body.appendChild(lb);
+        document.body.style.overflow = 'hidden';
 
-    // ── LIGHTBOX ──
-document.querySelectorAll('.floor-gallery img').forEach(img => {
-  img.addEventListener('click', () => {
-    const lb = document.createElement('div');
-    lb.className = 'lightbox';
-    lb.innerHTML = `
-      <img loading="lazy" decoding="async" src="${img.src}" alt="${img.alt}">
-      <span class="lightbox-hint">Kliknite bilo gdje za zatvaranje</span>
-    `;
-    document.body.appendChild(lb);
+        const close = () => {
+          document.body.removeChild(lb);
+          document.body.style.overflow = '';
+        };
 
-    document.body.style.overflow = 'hidden';
+        lb.addEventListener('click', close);
+        document.addEventListener('keydown', e => {
+          if (e.key === 'Escape') close();
+        }, { once: true });
+      });
+    });
 
-    const close = () => {
-      document.body.removeChild(lb);
-      document.body.style.overflow = '';
-    };
-
-    lb.addEventListener('click', close);
-  });
-});
-
-// ── STICKY NAV — highlight closest floor only ──
+    // ── STICKY NAV — highlight closest floor only ──
     const navLinks      = document.querySelectorAll('.floor-nav a');
     const floorSections = document.querySelectorAll('.floor');
     const floorNav      = document.getElementById('floorNav');
@@ -612,3 +652,6 @@ document.querySelectorAll('.floor-gallery img').forEach(img => {
         if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 200);
     }
+  </script>
+</body>
+</html>

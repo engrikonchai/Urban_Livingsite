@@ -97,18 +97,6 @@
       }
     }, { passive: true });
 
-    // 4. HAMBURGER MENU
-    const hamburger = document.getElementById('hamburger');
-    const menuOverlay = document.getElementById('menuOverlay');
-    if (hamburger && menuOverlay) {
-      const toggleMenu = () => {
-        const isActive = hamburger.classList.toggle('active');
-        menuOverlay.classList.toggle('active');
-        document.body.style.overflow = isActive ? 'hidden' : '';
-      };
-      hamburger.addEventListener('click', toggleMenu);
-    }
-
     // 5. DRAG TO SCROLL
     const addDragScroll = (el) => {
       if (!el) return;
