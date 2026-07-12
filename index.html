@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Urban Living — Ekskluzivni stanovi u Podgorici. Zeta Rezident, Upper Gorica i Zabjelo projekti."/>
   <title>Urban Living — Ekskluzivni Stanovi, Podgorica</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Urban Living — Ekskluzivni Stanovi, Podgorica"/>
+  <meta property="og:description" content="Ekskluzivni stanovi u Podgorici. Zeta Rezident, Upper Gorica i Zabjelo projekti."/>
+  <meta property="og:image" content="/images/background.webp"/>
+  <meta name="twitter:card" content="summary_large_image"/>
 
   <!-- Preconnect for faster font loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -23,7 +30,6 @@
 <nav id="nav" role="navigation" aria-label="Glavna navigacija">
   <a href="#hero" class="nav-logo">Urban<span> Living</span></a>
   <div class="nav-links">
-    <a href="#u-prodaji"   class="nav-link">U Prodaji</a>
     <a href="#u-izgradnji" class="nav-link">U Izgradnji</a>
     <a href="#u-najavi"    class="nav-link">U Najavi</a>
     <a href="#contact"     class="nav-link">Kontakt</a>
@@ -35,7 +41,6 @@
   <span></span><span></span><span></span>
 </button>
 <nav class="mob-menu" id="mobMenu" aria-label="Mobilna navigacija">
-  <a href="#u-prodaji">Zavrseni Projekti</a>
   <a href="#u-izgradnji">Projekti U Izgradnji</a>
   <a href="#u-najavi">Projekti U Najavi</a>
   <a href="#contact">Kontakt</a>
@@ -59,10 +64,7 @@
       <h2 class="sec-title">Projekti u <em>Izgradnji</em></h2>
     </div>
   </div>
-  <div class="projects-grid projects-grid--placeholder">
-      </div>
-    </div>
-  </div>
+  <div class="projects-grid">
 
     <a href="Urban_Living/index.html" class="project-card-link" aria-label="Zeta Rezident projekat">
       <div class="project-card">
@@ -84,6 +86,7 @@
       </div>
     </a>
 
+  </div>
 </section>
 
 <!-- PROJEKTI U NAJAVI -->
@@ -95,10 +98,7 @@
     
   </div>
 
-    <div class="projects-grid projects-grid--placeholder">
-      </div>
-  
-
+  <div class="projects-grid">
     <a href="Zabjelo/objekat3.html" class="project-card-link" aria-label="Zabjelo projekat">
       <div class="project-card">
         <img class="project-img" src="images/Pogled2.webp" alt="Zabjelo" loading="lazy" decoding="async"/>
@@ -108,16 +108,6 @@
         </div>
       </div>
     </a>
-
-</section>
-
-<!-- PROJEKTI U PRODAJI -->
-<section class="projects-slide" id="u-prodaji" aria-label="Projekti u prodaji">
-    <div>
-      <h2 class="sec-title">Zavrseni <em>Projekti</em></h2>
-    </div>
-
-
   </div>
 </section>
 
@@ -141,11 +131,20 @@
       <div class="cd-icon" aria-hidden="true">✉️</div>
       <div>
         <div class="cd-label">Email</div>
-        <div class="cd-value"><span>urbanlivingmontenegro@gmail.com</span></a></div>
+        <div class="cd-value"><a href="mailto:urbanlivingmontenegro@gmail.com">urbanlivingmontenegro@gmail.com</a></div>
       </div>
     </div>
 
   </div>
+
+  <form class="contact-form" id="contactForm">
+    <div class="cf-row">
+      <input type="text" id="cf-name" placeholder="Ime i prezime" required/>
+      <input type="text" id="cf-contact" placeholder="Telefon ili email" required/>
+    </div>
+    <textarea id="cf-message" rows="4" placeholder="Vaša poruka..." required></textarea>
+    <button type="submit" class="cf-submit">Pošaljite Upit</button>
+  </form>
 </section>
 
 <!-- FOOTER -->
@@ -190,6 +189,19 @@ for (var i = 0; i < links.length; i++) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') menuToggle(false);
+});
+
+// CONTACT FORM — mailto fallback (no backend needed)
+var contactForm = document.getElementById('contactForm');
+contactForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  var name    = document.getElementById('cf-name').value.trim();
+  var contact = document.getElementById('cf-contact').value.trim();
+  var message = document.getElementById('cf-message').value.trim();
+  var subject = 'Upit sa sajta — Urban Living';
+  var body    = 'Ime: ' + name + '\nKontakt: ' + contact + '\n\nPoruka:\n' + message;
+  window.location.href = 'mailto:urbanlivingmontenegro@gmail.com?subject=' +
+    encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 });
 </script>
 </body>

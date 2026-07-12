@@ -15,14 +15,14 @@ if (bodyId === 'top') {
 
     const dayImg   = document.createElement('img');
     dayImg.className = 'day';
-    dayImg.src       = `images/R${i}.jpg`;
+    dayImg.src       = `/Urban_Living/images/R${i}.jpg`;
     dayImg.alt       = `Pogled ${i} - Dan`;
     dayImg.loading   = 'lazy';
     dayImg.decoding  = 'async';
 
     const nightImg   = document.createElement('img');
     nightImg.className = 'night';
-    nightImg.src       = `images/R${i}N.jpg`;
+    nightImg.src       = `/Urban_Living/images/R${i}N.jpg`;
     nightImg.alt       = `Pogled ${i} - Noć`;
     nightImg.loading   = 'lazy';
     nightImg.decoding  = 'async';
@@ -119,7 +119,7 @@ if (bodyId === 'top') {
   floorItems.forEach(item => {
     item.addEventListener('click', () => {
       const floor = item.getAttribute('data-floor');
-      window.location.href = `apartments.html#floor${floor}`;
+      window.location.href = `/Urban_Living/apartments.html#floor${floor}`;
     });
   });
 }
